@@ -27,6 +27,7 @@ int main(void)
     /* Print OpenGL version */
     std::cout << glGetString(GL_VERSION) << std::endl;
 
+    /* Data - three vertex position*/
     float positions[6] = {
         -0.5f, -0.5f,
          0.0f,  0.5f,
@@ -35,12 +36,14 @@ int main(void)
 
     unsigned int buffer; /* PointerORindex to generated buffer */
     glGenBuffers(1, &buffer);
-    /* Define propose of the buffer */
+    /* Define propose of the buffer, Select==Bind this buffer into the stateMachine */
     glBindBuffer(GL_ARRAY_BUFFER, buffer); 
-    /* Define buffer Size, pass in preprocessed data */
+    /* Define buffer Size, pass in prepared data */
     glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);   
-    /* Specify how OpenGL interperts the data (3 vertices, float, 2 float represent 1 vertex, etc.) */
-    /* Generally: How our Data is Layed out?*/
+    
+    /* Vertex Attribute Setup */
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (const void*)0);
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -48,12 +51,10 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        /* Draw Triangle */
-        glBegin(GL_TRIANGLES);
-        glVertex2f(-0.5f, -0.5f);
-        glVertex2f(0.0f, 0.5f);
-        glVertex2f(0.5f, -0.5f);
-        glEnd();
+        /* Specify how OpenGL interperts the data (3 vertices, float, 2 float represent 1 vertex, etc.) */
+        /* Generally: How our Data is Layed out?*/
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
