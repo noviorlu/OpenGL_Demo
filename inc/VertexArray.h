@@ -3,6 +3,9 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 
+class VertexBuffer;
+class VertexBufferLayout;
+
 class VertexArray {
 private:
 	unsigned int m_RendererID;

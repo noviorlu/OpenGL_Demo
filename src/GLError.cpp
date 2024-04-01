@@ -1,5 +1,4 @@
 #include "GLError.h"
-
 #include <iostream>
 
 void GLClearError() {
