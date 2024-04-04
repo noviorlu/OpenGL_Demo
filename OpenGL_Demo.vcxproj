@@ -133,11 +133,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="inc\vendor\stb_image\stb_imagecpp.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\GLError.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
   </ItemGroup>
@@ -151,6 +153,8 @@
     <ClInclude Include="inc\GLError.h" />
     <ClInclude Include="inc\Renderer.h" />
     <ClInclude Include="inc\Shader.h" />
+    <ClInclude Include="inc\Texture.h" />
+    <ClInclude Include="inc\vendor\stb_image\stb_image.h" />
     <ClInclude Include="inc\VertexArray.h" />
     <ClInclude Include="inc\VertexBuffer.h" />
     <ClInclude Include="inc\VertexBufferLayout.h" />
