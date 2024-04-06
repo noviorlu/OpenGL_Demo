@@ -12,7 +12,7 @@
 #include "Shader.h"
 #include "Renderer.h"
 #include "Texture.h"
-
+#include "glm/gtc/matrix_transform.hpp"
 int main(void)
 {
     GLFWwindow* window;
@@ -74,9 +74,12 @@ int main(void)
 
     IndexBuffer ib(indices, 6);
 
+    glm::mat4 projMatrix = glm::ortho(-1.0f, 1.0f, -0.75f, 0.75f, -1.0f, 1.0f);
+
     Shader shader("assets/shaders/Basic.shader");
     shader.Bind();
     shader.SetUniform4f("u_Color", 0.0f, 0.3f, 8.0f, 1.0f);
+    shader.SetUniformMat4f("u_MVP", projMatrix);
     
     Texture texture("assets/textures/10.jpg");
     texture.Bind();
