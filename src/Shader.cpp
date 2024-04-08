@@ -21,17 +21,17 @@ Shader::~Shader()
 
 void Shader::Bind() const
 {
-    GLCall(glUseProgram(m_RendererID));
+    GL_CALL(glUseProgram(m_RendererID));
 }
 
 void Shader::Unbind() const
 {
-    GLCall(glUseProgram(0));
+    GL_CALL(glUseProgram(0));
 }
 
 void Shader::SetUniform1i(const std::string& name, int value)
 {
-    GLCall(glUniform1i(GetUniformLocation(name), value));
+    GL_CALL(glUniform1i(GetUniformLocation(name), value));
 }
 
 void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix)
@@ -39,12 +39,12 @@ void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix)
     /* v means we are passing in a float array 
      * GL_FALSE: correspond if the data is column matrix then no need transpose
     */
-    GLCall(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
+    GL_CALL(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]));
 }
 
 void Shader::SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3)
 {
-    GLCall(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
+    GL_CALL(glUniform4f(GetUniformLocation(name), v0, v1, v2, v3));
 }
 
 int Shader::GetUniformLocation(const std::string& name)
@@ -52,7 +52,7 @@ int Shader::GetUniformLocation(const std::string& name)
     if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
         return m_UniformLocationCache[name];
     
-    GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
+    GL_CALL(int location = glGetUniformLocation(m_RendererID, name.c_str()));
     if (location == -1) 
         std::cout << "Warning: uniform [" << name << "] doesn't exist!" << std::endl;
     
@@ -125,10 +125,10 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
     unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
     unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
 
-    GLCall(glAttachShader(program, vs));
-    GLCall(glAttachShader(program, fs));
-    GLCall(glLinkProgram(program));
-    GLCall(glValidateProgram(program));
+    GL_CALL(glAttachShader(program, vs));
+    GL_CALL(glAttachShader(program, fs));
+    GL_CALL(glLinkProgram(program));
+    GL_CALL(glValidateProgram(program));
 
     /* Delete the Intermediate Shader, shader already in Program */
     glDeleteShader(vs);

@@ -1,123 +1,82 @@
+#include "Application.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
 
-#include "GLError.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
-#include "Shader.h"
-#include "Renderer.h"
-#include "Texture.h"
-#include "glm/gtc/matrix_transform.hpp"
-int main(void)
-{
-    GLFWwindow* window;
+Application* Application::mInstance = nullptr;
+Application* Application::getInstance() {
+	if (mInstance == nullptr) {
+		mInstance = new Application();
+	}
+	return mInstance;
+}
+Application::Application() { }
 
-    /* Initialize the library */
-    if (!glfwInit())
-        return -1;
-    
-    /* SET Opengl version to 3.3, and profile to core */
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+Application::~Application() {
+	delete mInstance;
+}
 
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        return -1;
-    }
+bool Application::init(const int& width, const int& height) {
+	mWidth = width;
+	mHeight = height;
 
-    /* Make the window's context current */
-    glfwMakeContextCurrent(window);
+	/* [GLFW] 1. initalize GLFW env */
+	if (!glfwInit())
+		return false;
 
-    glfwSwapInterval(1);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+	// core mode (not-immediate rendering)
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    if (glewInit() != GLEW_OK)
-        std::cout << "Glew Initalization Error!" << std::endl;
+	/* [GLFW] 2. create Window obj */
+	mWindow = glfwCreateWindow(mWidth, mHeight, "OpenGL_Demo", NULL, NULL);
+	if (!mWindow) {
+		std::cout << "Failed to Create glfwWindow" << std::endl;
+		glfwTerminate();
+		return false;
+	}
+	// set current window to be Canvas
+	glfwMakeContextCurrent(mWindow);
 
-    /* Print OpenGL version */
-    std::cout << glGetString(GL_VERSION) << std::endl;
+	/* [Glad] Load all OpenGL function mapping */
+	if (glewInit() != GLEW_OK) {
+		std::cout << "Failed to initialize OpenGL context" << std::endl;
+		return false;
+	}
 
-    /* Data - four vertex */
-    float vertexInfos[] = {
-        -0.5f, -0.5f, 0.0f, 0.0f,// 0
-         0.5f, -0.5f, 1.0f, 0.0f,// 1
-         0.5f,  0.5f, 1.0f, 1.0f,// 2
-        -0.5f,  0.5f, 0.0f, 1.0f,// 3
-    };
+	/* [GLFW] 2.1 register Callback */
+	glfwSetFramebufferSizeCallback(mWindow, frameBufferSizeCallback);
+	glfwSetKeyCallback(mWindow, keyEventCallBack);
 
-    unsigned int indices[] = {
-        0,1,2,
-        2,3,0
-    };
+	glfwSetWindowUserPointer(mWindow, this);
 
-    /* Blending Propose */
-    GLCall(glEnable(GL_BLEND));
-    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+	return true;
+}
 
-    VertexArray va;
-    /* 4 float per vertex, 4 vertex in total */
-    VertexBuffer vb(vertexInfos, 4 * 4 * sizeof(float));
-    
-    VertexBufferLayout layout;
-    layout.Push<float>(2);
-    layout.Push<float>(2);
+bool Application::update() {
+	if (glfwWindowShouldClose(mWindow)) return false;
+	/*
+	 * [GLFW] 3.1 pull and cast window message
+	 * ex.mouse, keyboard. if has msg, deal and clean queue
+	 */
+	glfwPollEvents();
 
-    va.AddBuffer(vb, layout);
+	/* [GLFW] 3.2 DoubleBuffer swap */
+	glfwSwapBuffers(mWindow);
+	return true;
+}
 
-    IndexBuffer ib(indices, 6);
+void Application::destory() {
+	/* [GLFW] 4. Cleanup */
+	glfwTerminate();
+}
 
-    glm::mat4 projMatrix = glm::ortho(-1.0f, 1.0f, -0.75f, 0.75f, -1.0f, 1.0f);
+void Application::frameBufferSizeCallback(GLFWwindow* window, int width, int height) {
+	Application* self = (Application*)glfwGetWindowUserPointer(window);
+	if (self != nullptr) self->mResizeCallback(width, height);
+}
 
-    Shader shader("assets/shaders/Basic.shader");
-    shader.Bind();
-    shader.SetUniform4f("u_Color", 0.0f, 0.3f, 8.0f, 1.0f);
-    shader.SetUniformMat4f("u_MVP", projMatrix);
-    
-    Texture texture("assets/textures/10.jpg");
-    texture.Bind();
-    shader.SetUniform1i("u_Texture", 0);
-
-    va.Unbind();
-    shader.Unbind();
-    vb.Unbind();
-    ib.Unbind();
-
-    Renderer renderer;
-
-    float r = 0.0f;
-    float increment = 0.05f;
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-        /* Render here */
-        renderer.Clear();
-
-        shader.Bind();
-        shader.SetUniform4f("u_Color", r, 0.3f, 8.0f, 1.0f);
-        
-        renderer.Draw(va, ib, shader);
-        
-        if (r > 1.0f)
-            increment = -0.05f;
-        else if (r < 0.0f)
-            increment = 0.05f;
-        r += increment;
-
-        /* Swap front and back buffers */
-        glfwSwapBuffers(window);
-
-        /* Poll for and process events */
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
-    return 0;
+void Application::keyEventCallBack(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	Application* self = (Application*)glfwGetWindowUserPointer(window);
+	if (self != nullptr) self->mKeyEventCallback(key, scancode, action, mods);
 }

@@ -10,8 +10,8 @@ Texture::Texture(const std::string path)
 	stbi_set_flip_vertically_on_load(1);
 	m_LocalBuffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
 	
-	GLCall(glGenTextures(1, &m_RendererID));
-	GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
+	GL_CALL(glGenTextures(1, &m_RendererID));
+	GL_CALL(glBindTexture(GL_TEXTURE_2D, m_RendererID));
 
 	/* GL_TEXTURE_MIN_FILTER: How texture will be resample down
 	 * GL_TEXTURE_MAG_FILTER: Magnified texture
@@ -19,17 +19,17 @@ Texture::Texture(const std::string path)
 	 * GL_TEXTURE_WRAP_T: Tileing
 	 * We must specify this four Parameter!!!
 	*/
-	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
 	/* Internal Format: how OpenGL stores the data (GL_RGBA8, should specify 8, homany bits per channel)
 	 * Format: of localBuffer
 	 * Pixels: you can have it nullptr/0 if not ready at this stage you are allocating GPU Memory
 	*/
-	GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer));
-	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+	GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer));
+	GL_CALL(glBindTexture(GL_TEXTURE_2D, 0));
 
 	if (m_LocalBuffer)
 		stbi_image_free(m_LocalBuffer);
@@ -37,16 +37,16 @@ Texture::Texture(const std::string path)
 
 Texture::~Texture()
 {
-	GLCall(glDeleteTextures(1, &m_RendererID));
+	GL_CALL(glDeleteTextures(1, &m_RendererID));
 }
 
 void Texture::Bind(unsigned int slot) const
 {
-	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
-	GLCall(glBindTexture(GL_TEXTURE_2D, m_RendererID));
+	GL_CALL(glActiveTexture(GL_TEXTURE0 + slot));
+	GL_CALL(glBindTexture(GL_TEXTURE_2D, m_RendererID));
 }
 
 void Texture::Unbind() const
 {
-	GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+	GL_CALL(glBindTexture(GL_TEXTURE_2D, 0));
 }

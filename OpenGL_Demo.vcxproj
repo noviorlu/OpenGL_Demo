@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="vendor\stb_image\stb_imagecpp.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Application.cpp" />
@@ -149,6 +150,7 @@
     <None Include="assets\shaders\Basic.shader" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Application.h" />
     <ClInclude Include="inc\IndexBuffer.h" />
     <ClInclude Include="inc\GLError.h" />
     <ClInclude Include="inc\Renderer.h" />
