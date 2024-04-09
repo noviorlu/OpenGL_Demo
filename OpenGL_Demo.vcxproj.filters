@@ -36,7 +36,7 @@
     <ClCompile Include="src\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\stb_image\stb_imagecpp.cpp">
+    <ClCompile Include="Vendors\stb_image\stb_imagecpp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Texture.cpp">
@@ -45,25 +45,25 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui.cpp">
+    <ClCompile Include="Vendors\imgui\imgui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_demo.cpp">
+    <ClCompile Include="Vendors\imgui\imgui_demo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_draw.cpp">
+    <ClCompile Include="Vendors\imgui\imgui_draw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_impl_glfw.cpp">
+    <ClCompile Include="Vendors\imgui\imgui_impl_glfw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_impl_opengl3.cpp">
+    <ClCompile Include="Vendors\imgui\imgui_impl_opengl3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_tables.cpp">
+    <ClCompile Include="Vendors\imgui\imgui_tables.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\imgui\imgui_widgets.cpp">
+    <ClCompile Include="Vendors\imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -94,173 +94,176 @@
     <ClInclude Include="inc\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb_image\stb_image.h">
+    <ClInclude Include="Vendors\stb_image\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\common.hpp">
+    <ClInclude Include="Vendors\glm\common.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\exponential.hpp">
+    <ClInclude Include="Vendors\glm\exponential.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\ext.hpp">
+    <ClInclude Include="Vendors\glm\ext.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\fwd.hpp">
+    <ClInclude Include="Vendors\glm\fwd.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\geometric.hpp">
+    <ClInclude Include="Vendors\glm\geometric.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\glm.hpp">
+    <ClInclude Include="Vendors\glm\glm.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\integer.hpp">
+    <ClInclude Include="Vendors\glm\integer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\mat2x2.hpp">
+    <ClInclude Include="Vendors\glm\mat2x2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\mat2x3.hpp">
+    <ClInclude Include="Vendors\glm\mat2x3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\mat2x4.hpp">
+    <ClInclude Include="Vendors\glm\mat2x4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\mat3x2.hpp">
+    <ClInclude Include="Vendors\glm\mat3x2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\mat3x3.hpp">
+    <ClInclude Include="Vendors\glm\mat3x3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\mat3x4.hpp">
+    <ClInclude Include="Vendors\glm\mat3x4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\mat4x2.hpp">
+    <ClInclude Include="Vendors\glm\mat4x2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\mat4x3.hpp">
+    <ClInclude Include="Vendors\glm\mat4x3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\mat4x4.hpp">
+    <ClInclude Include="Vendors\glm\mat4x4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\matrix.hpp">
+    <ClInclude Include="Vendors\glm\matrix.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\packing.hpp">
+    <ClInclude Include="Vendors\glm\packing.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\trigonometric.hpp">
+    <ClInclude Include="Vendors\glm\trigonometric.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\vec2.hpp">
+    <ClInclude Include="Vendors\glm\vec2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\vec3.hpp">
+    <ClInclude Include="Vendors\glm\vec3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\vec4.hpp">
+    <ClInclude Include="Vendors\glm\vec4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\vector_relational.hpp">
+    <ClInclude Include="Vendors\glm\vector_relational.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\bitfield.hpp">
+    <ClInclude Include="Vendors\glm\gtc\bitfield.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\color_space.hpp">
+    <ClInclude Include="Vendors\glm\gtc\color_space.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\constants.hpp">
+    <ClInclude Include="Vendors\glm\gtc\constants.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\epsilon.hpp">
+    <ClInclude Include="Vendors\glm\gtc\epsilon.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\integer.hpp">
+    <ClInclude Include="Vendors\glm\gtc\integer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\matrix_access.hpp">
+    <ClInclude Include="Vendors\glm\gtc\matrix_access.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\matrix_integer.hpp">
+    <ClInclude Include="Vendors\glm\gtc\matrix_integer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\matrix_inverse.hpp">
+    <ClInclude Include="Vendors\glm\gtc\matrix_inverse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\matrix_transform.hpp">
+    <ClInclude Include="Vendors\glm\gtc\matrix_transform.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\noise.hpp">
+    <ClInclude Include="Vendors\glm\gtc\noise.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\packing.hpp">
+    <ClInclude Include="Vendors\glm\gtc\packing.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\quaternion.hpp">
+    <ClInclude Include="Vendors\glm\gtc\quaternion.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\random.hpp">
+    <ClInclude Include="Vendors\glm\gtc\random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\reciprocal.hpp">
+    <ClInclude Include="Vendors\glm\gtc\reciprocal.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\round.hpp">
+    <ClInclude Include="Vendors\glm\gtc\round.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\type_aligned.hpp">
+    <ClInclude Include="Vendors\glm\gtc\type_aligned.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\type_precision.hpp">
+    <ClInclude Include="Vendors\glm\gtc\type_precision.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\type_ptr.hpp">
+    <ClInclude Include="Vendors\glm\gtc\type_ptr.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\ulp.hpp">
+    <ClInclude Include="Vendors\glm\gtc\ulp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\glm\gtc\vec1.hpp">
+    <ClInclude Include="Vendors\glm\gtc\vec1.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\imconfig.h">
+    <ClInclude Include="Vendors\imgui\imconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\imgui.h">
+    <ClInclude Include="Vendors\imgui\imgui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\imgui_impl_glfw.h">
+    <ClInclude Include="Vendors\imgui\imgui_impl_glfw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\imgui_impl_opengl3.h">
+    <ClInclude Include="Vendors\imgui\imgui_impl_opengl3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\imgui_impl_opengl3_loader.h">
+    <ClInclude Include="Vendors\imgui\imgui_impl_opengl3_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\imgui_internal.h">
+    <ClInclude Include="Vendors\imgui\imgui_internal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\imstb_rectpack.h">
+    <ClInclude Include="Vendors\imgui\imstb_rectpack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\imstb_textedit.h">
+    <ClInclude Include="Vendors\imgui\imstb_textedit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\imgui\imstb_truetype.h">
+    <ClInclude Include="Vendors\imgui\imstb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tests\test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="vendor\glm\copying.txt" />
+    <Text Include="Vendors\glm\copying.txt" />
   </ItemGroup>
 </Project>
