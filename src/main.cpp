@@ -76,7 +76,6 @@ int main(void)
     
     va.Unbind();
     m_shader->Unbind();
-    texture.Unbind();
     vb.Unbind();
     ib.Unbind();
 
