@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="tests\TestClearColor.cpp" />
     <ClCompile Include="Vendors\imgui\imgui.cpp" />
     <ClCompile Include="Vendors\imgui\imgui_demo.cpp" />
     <ClCompile Include="Vendors\imgui\imgui_draw.cpp" />
@@ -163,7 +164,8 @@
     <ClInclude Include="inc\Renderer.h" />
     <ClInclude Include="inc\Shader.h" />
     <ClInclude Include="inc\Texture.h" />
-    <ClInclude Include="tests\test.h" />
+    <ClInclude Include="tests\Test.h" />
+    <ClInclude Include="tests\TestClearColor.h" />
     <ClInclude Include="Vendors\glm\common.hpp" />
     <ClInclude Include="Vendors\glm\exponential.hpp" />
     <ClInclude Include="Vendors\glm\ext.hpp" />

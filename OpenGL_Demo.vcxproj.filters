@@ -66,6 +66,9 @@
     <ClCompile Include="Vendors\imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tests\TestClearColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
@@ -259,7 +262,10 @@
     <ClInclude Include="Vendors\imgui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tests\test.h">
+    <ClInclude Include="tests\Test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tests\TestClearColor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
