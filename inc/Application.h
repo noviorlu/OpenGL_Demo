@@ -16,10 +16,12 @@ public:
 	~Application();
 	static Application* getInstance();
 
-	bool init(const int& width = 800, const int& height = 600);
-	bool draw();
-	void swapBuffer();
-	void destory();
+	bool initCanvas(const int& width = 800, const int& height = 600);
+	bool initGui();
+	bool checkCanvas();
+	void swapCanvasBuffer();
+	void destoryCanvas();
+	void destoryGui();
 
 	uint32_t getWidth()const { return mWidth; }
 	uint32_t getHeight()const { return mHeight; }
@@ -28,14 +30,12 @@ public:
 
 	void setResizeCallback(ResizeCallback callback) { mResizeCallback = callback; }
 	void setKeyEventCallback(KeyEventCallback callback) { mKeyEventCallback = callback; }
-	
-	glm::vec3 translation;
 
 private:
 	Application();
 
 	static Application* mInstance;
-	ImGuiIO* io;
+	ImGuiIO* io { nullptr };
 
 
 	uint32_t mWidth{ 0 };
