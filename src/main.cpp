@@ -51,22 +51,42 @@ int main(void)
         2,3,0
     };
 
+    Renderer renderer;
+
     /* Blending Propose */
     GL_CALL(glEnable(GL_BLEND));
     GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-    test::TestClearColor test;
+    test::Test* currentTest = nullptr;
+    test::TestMenu* testMenu = new test::TestMenu(currentTest);
+    
+    // can set the test here, no need to be menu, maybe good as command line arguments
+    currentTest = testMenu;
+    testMenu->RegisterTest<test::TestClearColor>("Clear Color");
 
     while (app.checkCanvas())
     {
+        renderer.Clear();
+
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-        test.OnImGuiRender();
-        test.OnRender();
+
+        if (currentTest) {
+            currentTest->OnUpdate(0.0f);
+			currentTest->OnRender();
+            
+			ImGui::Begin("Test");
+            if(currentTest != testMenu && ImGui::Button("<-")){
+				delete currentTest;
+				currentTest = testMenu;
+			}
+            currentTest->OnImGuiRender();
+			ImGui::End();
+        }
+
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
 
         app.swapCanvasBuffer();
     }

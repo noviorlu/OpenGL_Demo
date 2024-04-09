@@ -1,16 +1,11 @@
 #include "TestClearColor.h"
 
-#include <GL/glew.h>
-#include <imgui/imgui.h>
-
-#include "GLError.h"
-
 namespace test {
     TestClearColor::TestClearColor()
      : m_ClearColor { 0.2f, 0.3f, 0.3f, 1.0f } { }
-    TestClearColor::~TestClearColor() { }
-
-    void TestClearColor::OnUpdate(float deltaTime) { }
+    TestClearColor::~TestClearColor() { 
+        GL_CALL(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+    }
 
     void TestClearColor::OnRender()
     {
