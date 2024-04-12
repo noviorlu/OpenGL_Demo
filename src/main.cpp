@@ -15,6 +15,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "../tests/TestClearColor.h"
+#include "../tests/TestTexture2D.h"
 
 Shader* m_shader = nullptr;
 
@@ -38,19 +39,6 @@ int main(void)
     /* Print OpenGL version */
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    /* Data - four vertex */
-    float vertexInfos[] = {
-         100.0f, 100.0f, 0.0f, 0.0f,// 0
-         200.0f, 100.0f, 1.0f, 0.0f,// 1
-         200.0f, 200.0f, 1.0f, 1.0f,// 2
-         100.0f, 200.0f, 0.0f, 1.0f,// 3
-    };
-
-    unsigned int indices[] = {
-        0,1,2,
-        2,3,0
-    };
-
     Renderer renderer;
 
     /* Blending Propose */
@@ -63,6 +51,7 @@ int main(void)
     // can set the test here, no need to be menu, maybe good as command line arguments
     currentTest = testMenu;
     testMenu->RegisterTest<test::TestClearColor>("Clear Color");
+    testMenu->RegisterTest<test::TestTexture2D>("Texture 2D");
 
     while (app.checkCanvas())
     {

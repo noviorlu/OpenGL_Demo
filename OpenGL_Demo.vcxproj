@@ -136,6 +136,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="tests\Test.cpp" />
     <ClCompile Include="tests\TestClearColor.cpp" />
+    <ClCompile Include="tests\TestTexture2D.cpp" />
     <ClCompile Include="Vendors\imgui\imgui.cpp" />
     <ClCompile Include="Vendors\imgui\imgui_demo.cpp" />
     <ClCompile Include="Vendors\imgui\imgui_draw.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="inc\Texture.h" />
     <ClInclude Include="tests\Test.h" />
     <ClInclude Include="tests\TestClearColor.h" />
+    <ClInclude Include="tests\TestTexture2D.h" />
     <ClInclude Include="Vendors\glm\common.hpp" />
     <ClInclude Include="Vendors\glm\exponential.hpp" />
     <ClInclude Include="Vendors\glm\ext.hpp" />
