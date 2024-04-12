@@ -91,6 +91,9 @@ int main(void)
         app.swapCanvasBuffer();
     }
 
+    delete currentTest;
+    if (currentTest != testMenu) delete testMenu;
+
     app.destoryCanvas();
     app.destoryGui();
     return 0;
