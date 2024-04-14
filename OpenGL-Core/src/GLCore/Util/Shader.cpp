@@ -122,6 +122,11 @@ namespace GLCore::Utils {
 		glUniform1i(GetUniformLocation(name), value);
 	}
 
+	void Shader::SetUniform1iv(const std::string& name, int count, int* value)
+	{
+		glUniform1iv(GetUniformLocation(name), count, value);
+	}
+
 	void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix)
 	{
 		/* v means we are passing in a float array

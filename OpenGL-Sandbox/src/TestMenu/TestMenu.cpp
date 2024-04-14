@@ -37,8 +37,22 @@ void TestMenu::OnImGuiRender()
 			{
 				m_currentLayer = test.second();
 				m_Application->RuntimeLayerInstr(PUSH_LAYER, m_currentLayer);
+				break;
 			}
 		}
 	}
 	ImGui::End();
+}
+
+void TestMenu::Preset(std::string testName)
+{
+	for (auto& test : m_Tests)
+	{
+		if (test.first == testName)
+		{
+			m_currentLayer = test.second();
+			m_Application->RuntimeLayerInstr(PUSH_LAYER, m_currentLayer);
+			break;
+		}
+	}
 }

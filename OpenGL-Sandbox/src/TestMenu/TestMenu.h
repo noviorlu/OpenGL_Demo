@@ -11,6 +11,9 @@ public:
 	TestMenu(Application* app);
 	virtual void OnUpdate(Timestep ts) override;
 	virtual void OnImGuiRender() override;
+	
+	void Preset(std::string testName);
+	
 	template<typename T>
 	void RegisterTest(const std::string& name) {
 		std::cout << "[TestMenu] Registering test: " << name << std::endl;
