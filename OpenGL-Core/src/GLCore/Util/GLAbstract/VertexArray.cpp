@@ -30,6 +30,8 @@ namespace GLCore::Utils {
 			));
 			offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
 		}
+
+		m_VertexSize = offset;
 	}
 
 	void VertexArray::Bind() const

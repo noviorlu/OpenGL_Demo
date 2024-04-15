@@ -3,6 +3,7 @@
 #include "ClearColorTest/ClearColorTest.h"
 #include "TextureTest/Texture2DTest.h"
 #include "BatchRenderTest/BatchRenderTest.h"
+#include "CubeTest/CubeTest.h"
 
 using namespace GLCore;
 
@@ -16,9 +17,10 @@ public:
 		testMenu->RegisterTest<ClearColorTest>("Test ColorQuad");
 		testMenu->RegisterTest<Texture2DTest>("Test Texture2D");
 		testMenu->RegisterTest<BatchRenderTest>("Test BatchRender");
+		testMenu->RegisterTest<CubeTest>("Test cube3D");
 		PushLayer(testMenu);
 
-		testMenu->Preset("Test BatchRender");
+		testMenu->Preset("Test cube3D");
 	}
 };
 

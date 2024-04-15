@@ -12,6 +12,15 @@ namespace GLCore::Utils {
         glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
     }
 
+    void Renderer::Draw(const VertexArray& va, const VertexBuffer& vb, const Shader& shader)
+    {
+        shader.Bind();
+        va.Bind();
+        vb.Bind();
+
+        glDrawArrays(GL_TRIANGLES, 0, vb.GetCount() / va.GetVertexSize());
+    }
+
     void Renderer::Clear()
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

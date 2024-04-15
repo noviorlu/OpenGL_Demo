@@ -10,6 +10,7 @@ namespace GLCore::Utils {
 	class VertexArray {
 	private:
 		unsigned int m_RendererID;
+		unsigned int m_VertexSize;
 	public:
 		VertexArray();
 		~VertexArray();
@@ -18,5 +19,7 @@ namespace GLCore::Utils {
 
 		void Bind() const;
 		void Unbind() const;
+
+		inline unsigned int GetVertexSize() const { return m_VertexSize; }
 	};
 }
