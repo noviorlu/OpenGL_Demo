@@ -28,7 +28,7 @@ void BatchRenderTest::OnAttach()
 
 
 	float vertices[] = {
-	//  |positions          | colors                   |uv         |uvIdx
+	//  | positions         | colors                   |uv         |uvIdx
 		-0.55f, 0.05f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f, 0.0f, 0.0f, -1.0f,
 		-0.05f, 0.05f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f, 0.0f, 0.0f, -1.0f,
 		-0.05f, 0.55f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f, 0.0f, 0.0f, -1.0f,
@@ -97,7 +97,7 @@ void BatchRenderTest::OnDetach()
 }
 
 void BatchRenderTest::OnEvent(Event& event)
-{
+{	
 	m_CameraController.OnEvent(event);
 }
 

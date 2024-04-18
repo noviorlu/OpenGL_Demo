@@ -19,8 +19,6 @@ public:
 		testMenu->RegisterTest<BatchRenderTest>("Test BatchRender");
 		testMenu->RegisterTest<CubeTest>("Test cube3D");
 		PushLayer(testMenu);
-
-		testMenu->Preset("Test cube3D");
 	}
 };
 
