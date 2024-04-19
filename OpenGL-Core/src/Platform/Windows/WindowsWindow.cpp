@@ -67,8 +67,6 @@ namespace GLCore {
 			data.Width = width;
 			data.Height = height;
 			
-			glViewport(0, 0, width, height);
-
 			WindowResizeEvent event(width, height);
 			data.EventCallback(event);
 		});
