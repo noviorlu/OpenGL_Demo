@@ -19,7 +19,7 @@ private:
 	GLCore::Utils::VertexArray* m_va;
 	GLCore::Utils::VertexBuffer* m_vb;
 	GLCore::Utils::Texture* m_Texture;
-
+	GLCore::Utils::PerspectiveCameraController m_CameraController;
 	float m_time = 0.0f;
 
 	// world space positions of our cubes

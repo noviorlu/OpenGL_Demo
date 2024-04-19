@@ -2,7 +2,9 @@
 #include "Camera.h"
 
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <imgui.h>
 
 namespace GLCore::Utils {
 	void Camera::RecalculateViewMatrix()
@@ -29,10 +31,23 @@ namespace GLCore::Utils {
     void Camera::SetViewPort()
 	{
         glViewport(
-            m_fullScreenWidth * m_viewPortX,
-            m_fullScreenHeight * m_viewPortY, 
-            m_fullScreenWidth * m_viewPortWidth,
-            m_fullScreenHeight * m_viewPortHeight
+            (int)(m_fullScreenWidth * m_viewPortX),
+            (int)(m_fullScreenHeight * m_viewPortY),
+            (int)(m_fullScreenWidth * m_viewPortWidth),
+            (int)(m_fullScreenHeight * m_viewPortHeight)
         );
 	}
+
+    void Camera::OnImGuiRender() {
+        ImGui::Text("Camera");
+        if(ImGui::InputFloat3("Camera Position", glm::value_ptr(m_Position)))
+			RecalculateViewMatrix();
+        if(ImGui::DragFloat2("Yaw and Pitch", &m_Yaw))
+            RecalculateViewMatrix();
+        
+        if(ImGui::DragFloat2("ViewPort XY Perc", &m_viewPortX, 0, 1))
+			SetViewPort();
+		if(ImGui::DragFloat2("ViewPort WH Perc", &m_viewPortWidth, 0, 1))
+            SetViewPort();
+    }
 }

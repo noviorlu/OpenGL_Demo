@@ -6,11 +6,10 @@ layout(location = 1) in vec2 aTexCoord;
 out vec2 v_TexCoord; // varing TextCoord
 
 uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+uniform mat4 ViewProjection;
 
 void main()
 {
-    gl_Position = projection * view * model * vec4(aPosition, 1.0f);
+    gl_Position = ViewProjection * model * vec4(aPosition, 1.0f);
     v_TexCoord = aTexCoord;
 }

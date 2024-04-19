@@ -102,11 +102,14 @@ void CubeTest::OnDetach()
 	m_Texture->Unbind();
 }
 
-void CubeTest::OnEvent(Event& event){}
+void CubeTest::OnEvent(Event& event){
+	m_CameraController.OnEvent(event);
+}
 
 void CubeTest::OnUpdate(Timestep ts)
 {
 	m_time += ts.GetSeconds();
+	m_CameraController.OnUpdate(ts);
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	GLCore::Utils::Renderer::Clear();
@@ -114,19 +117,7 @@ void CubeTest::OnUpdate(Timestep ts)
 	m_Texture->Bind(0);
 	m_Shader->Bind();
 
-	glm::mat4 view = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-	glm::mat4 projection = glm::mat4(1.0f);
-	
-	projection = glm::perspective(
-		glm::radians(45.0f), 
-		(float)Application::Get().GetWindow().GetWidth() / (float)Application::Get().GetWindow().GetHeight(), 
-		0.1f, 
-		100.0f
-	);
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-	// pass transformation matrices to the shader
-	m_Shader->SetUniformMat4f("projection", projection); 
-	m_Shader->SetUniformMat4f("view", view);
+	m_Shader->SetUniformMat4f("ViewProjection", m_CameraController.GetViewProjectionMatrix());
 
 	for (unsigned int i = 1; i < 10; i++)
 	{
@@ -146,5 +137,6 @@ void CubeTest::OnImGuiRender()
 {
 	ImGui::Begin("Controls");
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	m_CameraController.OnImGuiRender();
 	ImGui::End();
 }

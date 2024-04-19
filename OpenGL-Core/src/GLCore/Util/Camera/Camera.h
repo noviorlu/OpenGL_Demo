@@ -50,16 +50,19 @@ namespace GLCore::Utils {
 			m_viewPortHeight = height; 
 			SetViewPort();
 		}
-		void OnWindowResized(uint32_t width, uint32_t height) {
+		virtual void OnWindowResized(uint32_t width, uint32_t height) {
 			m_fullScreenWidth = width;
 			m_fullScreenHeight = height;
 			SetViewPort();
 		}
 	protected:
 		void RecalculateViewMatrix();
+		virtual void RecalculateProjectionMatrix() = 0;
 		void RecalculateVPMatrix();
 		void SetViewPort();
-	
+		
+		virtual void OnImGuiRender();
+
 	protected:
 		/* Camera Matrices */
 		glm::mat4 m_ProjectionMatrix;
@@ -82,7 +85,7 @@ namespace GLCore::Utils {
 		float m_viewPortWidth = 1.0f;
 		float m_viewPortHeight = 1.0f;
 
-		float m_fullScreenWidth = 0.0f;
-		float m_fullScreenHeight = 0.0f;
+		uint32_t m_fullScreenWidth = 1600;
+		uint32_t m_fullScreenHeight = 900;
 	};
 }
