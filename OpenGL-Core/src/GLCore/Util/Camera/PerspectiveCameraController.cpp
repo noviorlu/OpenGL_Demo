@@ -60,10 +60,16 @@ namespace GLCore::Utils {
 			m_Yaw += xoffset;
 			m_Pitch += yoffset;
 
-			if (m_Pitch > 89.0f)
-				m_Pitch = 89.0f;
-			if (m_Pitch < -89.0f)
-				m_Pitch = -89.0f;
+			if(m_Yaw > 360.0f) m_Yaw = 0.0f;
+			else if(m_Yaw < 0.0f) m_Yaw = 360.0f;
+			
+			if(m_Pitch < -180.0f) m_Pitch = 180.0f;
+			else if(m_Pitch > 180.0f) m_Pitch = -180.0f;
+
+			if (m_Pitch > 90.0f || m_Pitch < -90.0f)
+				m_WorldUp = WORLD_DOWN;
+			else
+				m_WorldUp = WORLD_UP;
 
 			RecalculateViewMatrix();
 		}

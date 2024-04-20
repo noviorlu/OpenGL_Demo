@@ -25,9 +25,9 @@ namespace GLCore::Utils {
 		ImGui::Text("Perspective Camera");
 		if(ImGui::SliderFloat("Field of View", &m_Fov, 0.0f, 180.0f))
 			RecalculateProjectionMatrix();
-		if(ImGui::SliderFloat("Near Plane n", &m_Near, 0.0f, 100.0f))
+		if(ImGui::SliderFloat("Near Plane n", &m_Near, 0.01f, 100.0f))
 			RecalculateProjectionMatrix();
-		if(ImGui::SliderFloat("Far Plane f", &m_Far, 0.0f, 100.0f))
+		if(ImGui::SliderFloat("Far Plane f", &m_Far, 0.01f, 100.0f))
 			RecalculateProjectionMatrix();
 	}
 }
