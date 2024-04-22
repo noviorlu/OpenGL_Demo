@@ -5,7 +5,7 @@
 #include "GLCore/Core/Application.h"
 
 namespace GLCore::Utils {
-	const glm::vec3 WORLD_POS = glm::vec3(0.0f, 0.0f, 0.0f);
+	const glm::vec3 WORLD_POS = glm::vec3(0.0f, 0.0f, 10.0f);
 	const glm::vec3 WORLD_UP = glm::vec3(0.0f, 1.0f, 0.0f);
 	const glm::vec3 WORLD_DOWN = glm::vec3(0.0f, -1.0f, 0.0f);
 	const float YAW = 270.0f;
@@ -23,8 +23,14 @@ namespace GLCore::Utils {
 			m_fullScreenHeight = win.GetHeight();
 		}
 
+		/* Camera Getters */
+		const float& GetYaw() const { return m_Yaw; }
+		const float& GetPitch() const { return m_Pitch; }
 		const glm::vec3& GetPosition() const { return m_Position; }
-		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
+
+		const glm::vec3& GetFront() const { return m_Front; }
+		const glm::vec3& GetUp() const { return m_Up; }
+		const glm::vec3& GetRight() const { return m_Right; }
 
 		const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 		const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
@@ -35,35 +41,30 @@ namespace GLCore::Utils {
 		const float GetViewPortWidth() const { return m_viewPortWidth; }
 		const float GetViewPortHeight() const { return m_viewPortHeight; }
 
-		void SetViewPortX(float x) {
-			m_viewPortX = x; 
-			SetViewPort();
-		}
-		void SetViewPortY(float y) { 
-			m_viewPortY = y; 
-			SetViewPort();
-		}
-		void SetViewPortWidth(float width) { 
-			m_viewPortWidth = width;
-			SetViewPort();
-		}
-		void SetViewPortHeight(float height) { 
-			m_viewPortHeight = height; 
-			SetViewPort();
-		}
-		virtual void OnWindowResized(uint32_t width, uint32_t height) {
-			m_fullScreenWidth = width;
-			m_fullScreenHeight = height;
-			SetViewPort();
-		}
+		/* Camera Setters */
+		void SetYaw(const float& yaw) { m_Yaw = yaw; RecalculateViewMatrix(); }
+		void SetPitch(const float& pitch) { m_Pitch = pitch; RecalculateViewMatrix(); }
+
+		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
+		void OffsetPosition(const glm::vec3& offset) { m_Position += offset; RecalculateViewMatrix(); }
+
+		void SetViewPortX(float x) { m_viewPortX = x; SetViewPort(); }
+		void SetViewPortY(float y) { m_viewPortY = y; SetViewPort(); }
+		void SetViewPortWidth(float width) { m_viewPortWidth = width; SetViewPort(); }
+		void SetViewPortHeight(float height) { m_viewPortHeight = height; SetViewPort(); }
+		
+		/* Camera Public Functions */
+		void OffsetYawPitch(const float& offsetY, const float& offsetP);
+
+		virtual void OnWindowResized(uint32_t width, uint32_t height);
+		virtual void OnImGuiRender();
+
 	protected:
 		void RecalculateViewMatrix();
 		virtual void RecalculateProjectionMatrix() = 0;
 		void RecalculateVPMatrix();
 		void SetViewPort();
 		
-		virtual void OnImGuiRender();
-
 	protected:
 		/* Camera Matrices */
 		glm::mat4 m_ProjectionMatrix;

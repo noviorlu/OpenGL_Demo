@@ -15,6 +15,19 @@ namespace GLCore::Utils {
 		RecalculateProjectionMatrix();
 	}
 
+	void PerspectiveCamera::OffsetFov(float offset) {
+		if (m_Fov >= 1.0f && m_Fov <= 160.0f) {
+			m_Fov += offset;
+			RecalculateProjectionMatrix();
+		}
+	}
+
+	void PerspectiveCamera::OnWindowResized(uint32_t width, uint32_t height) {
+		Camera::OnWindowResized(width, height);
+		m_Aspect = (m_viewPortWidth * m_fullScreenWidth) / (m_viewPortHeight * m_fullScreenHeight);
+		RecalculateProjectionMatrix();
+	}
+
 	void PerspectiveCamera::RecalculateProjectionMatrix() {
 		m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, m_Near, m_Far);
 		RecalculateVPMatrix();

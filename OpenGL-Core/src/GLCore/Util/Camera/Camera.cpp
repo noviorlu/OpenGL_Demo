@@ -7,7 +7,33 @@
 #include <imgui.h>
 
 namespace GLCore::Utils {
-	void Camera::RecalculateViewMatrix()
+    void Camera::OffsetYawPitch(const float& offsetY, const float& offsetP) { 
+        m_Yaw += offsetY; 
+        m_Pitch += offsetP; 
+
+        if (m_Yaw > 360.0f) m_Yaw = 0.0f;
+        else if (m_Yaw < 0.0f) m_Yaw = 360.0f;
+
+        if (m_Pitch < -180.0f) m_Pitch = 180.0f;
+        else if (m_Pitch > 180.0f) m_Pitch = -180.0f;
+
+        if (m_Pitch > 90.0f || m_Pitch < -90.0f)
+            m_WorldUp = WORLD_DOWN;
+        else
+            m_WorldUp = WORLD_UP;
+
+        RecalculateViewMatrix(); 
+    }
+
+    
+    void Camera::OnWindowResized(uint32_t width, uint32_t height) {
+        m_fullScreenWidth = width;
+        m_fullScreenHeight = height;
+        SetViewPort();
+    }
+    
+
+    void Camera::RecalculateViewMatrix()
 	{
         // calculate the new Front vector
         glm::vec3 front;
@@ -19,9 +45,9 @@ namespace GLCore::Utils {
         m_Right = glm::normalize(glm::cross(m_Front, m_WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
         m_Up = glm::normalize(glm::cross(m_Right, m_Front));
 
-		m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Front, m_Up);
+	    m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Front, m_Up);
         RecalculateVPMatrix();
-	}
+    }
 
     void Camera::RecalculateVPMatrix()
 	{

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PerspectiveCamera.h"
+#include "CameraController.h"
 #include "GLCore/Core/Timestep.h"
 
 #include "GLCore/Events/ApplicationEvent.h"
@@ -8,18 +9,15 @@
 
 namespace GLCore::Utils {
 
-	class PerspectiveCameraController : public PerspectiveCamera
+	class PerspectiveCameraController : public CameraController
 	{
 	public:
 		PerspectiveCameraController();
+		~PerspectiveCameraController();
 
-		void OnUpdate(Timestep ts);
-		void OnEvent(Event& e);
-
-		float GetZoomLevel() const { return m_Fov; }
-		void SetZoomLevel(float level) { m_Fov = level; }
-
+		void OnUpdate(Timestep ts) override;
 		void OnImGuiRender() override;
+
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);

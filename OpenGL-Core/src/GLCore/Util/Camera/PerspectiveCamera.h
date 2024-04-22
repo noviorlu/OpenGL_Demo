@@ -24,12 +24,8 @@ namespace GLCore::Utils {
 		const float GetNear() const { return m_Near; }
 		const float GetFar() const { return m_Far; }
 
-
-		void OnWindowResized(uint32_t width, uint32_t height) override {
-			Camera::OnWindowResized(width, height);
-			m_Aspect = (m_viewPortWidth * m_fullScreenWidth) / (m_viewPortHeight * m_fullScreenHeight);
-			RecalculateProjectionMatrix();
-		}
+		void OffsetFov(float offset);
+		void OnWindowResized(uint32_t width, uint32_t height) override;
 		
 	protected:
 		void RecalculateProjectionMatrix() override;
