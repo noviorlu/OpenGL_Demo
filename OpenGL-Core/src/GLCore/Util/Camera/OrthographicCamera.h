@@ -19,9 +19,6 @@ namespace GLCore::Utils {
 
 		void SetProjection(float left, float right, float bottom, float top);
 
-		float GetRotation() const { return m_Yaw; }
-		void SetRotation(float rotation) { m_Yaw = rotation; RecalculateViewMatrix(); }
-	
 	private:
 		void RecalculateProjectionMatrix() override;
 	private:

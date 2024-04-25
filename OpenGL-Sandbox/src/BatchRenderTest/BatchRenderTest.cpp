@@ -109,7 +109,7 @@ void BatchRenderTest::OnUpdate(Timestep ts)
 	GLCore::Utils::Renderer::Clear();
 
 	m_Shader->Bind();
-	m_Shader->SetUniformMat4f("u_ViewProjection", m_CameraController.GetCamera().GetViewProjectionMatrix());
+	m_Shader->SetUniformMat4f("u_ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
 
 	m_va->Bind();
 	m_Shader->SetUniformMat4f("u_Transform", glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f) ));

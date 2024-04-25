@@ -86,7 +86,7 @@ void ClearColorTest::OnUpdate(Timestep ts)
 	GLCore::Utils::Renderer::Clear();
 
 	m_Shader->Bind();
-	m_Shader->SetUniformMat4f("u_ViewProjection", m_CameraController.GetCamera().GetViewProjectionMatrix());
+	m_Shader->SetUniformMat4f("u_ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
 	m_Shader->SetUniform4fv("u_Color", m_SquareColor);
 
 	m_va->Bind();

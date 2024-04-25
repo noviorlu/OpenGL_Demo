@@ -16,21 +16,8 @@ namespace GLCore::Utils {
 
 	void PerspectiveCameraController::OnUpdate(Timestep ts)
 	{
-		CameraController::OnUpdate(ts);
-
-		if (m_LeftMousePressed)
-		{
-			auto [x, y] = Input::GetMousePosition();
-			float xoffset = x - m_LastX;
-			float yoffset = m_LastY - y;
-			m_LastX = x;
-			m_LastY = y;
-
-			xoffset *= m_MouseSensitivity;
-			yoffset *= m_MouseSensitivity;
-
-			m_Camera->OffsetYawPitch(xoffset, yoffset);
-		}
+		MouseMovement(ts);
+		KeyboardMovement(ts);
 	}
 
 	void PerspectiveCameraController::OnImGuiRender()
@@ -44,12 +31,6 @@ namespace GLCore::Utils {
 	bool PerspectiveCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		((PerspectiveCamera*)m_Camera)->OffsetFov(-e.GetYOffset());
-		return false;
-	}
-
-	bool PerspectiveCameraController::OnWindowResized(WindowResizeEvent& e)
-	{
-		m_Camera->OnWindowResized(e.GetWidth(), e.GetHeight());
 		return false;
 	}
 
@@ -81,5 +62,64 @@ namespace GLCore::Utils {
 			break;
 		}
 		return false;
+	}
+
+	void PerspectiveCameraController::MouseMovement(Timestep ts) {
+		if (m_LeftMousePressed)
+		{
+			auto [x, y] = Input::GetMousePosition();
+			float xoffset = x - m_LastX;
+			float yoffset = m_LastY - y;
+			m_LastX = x;
+			m_LastY = y;
+
+			xoffset *= m_MouseSensitivity;
+			yoffset *= m_MouseSensitivity;
+
+			OffsetYawPitch(xoffset, yoffset);
+		}
+	}
+
+	void PerspectiveCameraController::OffsetYawPitch(const float& offsetY, const float& offsetP) {
+		m_Yaw += offsetY;
+		m_Pitch += offsetP;
+
+		if (m_Yaw > 360.0f) m_Yaw = 0.0f;
+		else if (m_Yaw < 0.0f) m_Yaw = 360.0f;
+
+		if (m_Pitch < -180.0f) m_Pitch = 180.0f;
+		else if (m_Pitch > 180.0f) m_Pitch = -180.0f;
+
+		if (m_Pitch > 90.0f || m_Pitch < -90.0f)
+			m_Camera->SetWorldUp(false);
+		else
+			m_Camera->SetWorldUp(true);
+
+		if (isFreelook) OffsetYawPitch_Freelook();
+		else OffsetYawPitch_Orbit();
+	}
+
+	void PerspectiveCameraController::OffsetYawPitch_Freelook() {
+		// calculate the new Front vector
+		glm::vec3 front;
+		front.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+		front.y = sin(glm::radians(m_Pitch));
+		front.z = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+
+		m_Camera->UpdateViewMatrix(m_Position, front);
+	}
+
+	void PerspectiveCameraController::OffsetYawPitch_Orbit() {
+		float yawRad = glm::radians(m_Yaw);
+		float pitchRad = glm::radians(m_Pitch);
+
+		// Spherical to Cartesian coordinates conversion
+		glm::vec3 position;
+		position.x = m_Target.x + m_Radius * cos(pitchRad) * cos(yawRad);
+		position.y = m_Target.y + m_Radius * sin(pitchRad);
+		position.z = m_Target.z + m_Radius * cos(pitchRad) * sin(yawRad);
+
+		m_Position = position;
+		m_Camera->UpdateViewMatrix_T(m_Position, m_Target);
 	}
 }

@@ -5,27 +5,19 @@
 #include "GLCore/Core/Application.h"
 
 namespace GLCore::Utils {
-	const glm::vec3 WORLD_POS = glm::vec3(0.0f, 0.0f, 10.0f);
-	const glm::vec3 WORLD_UP = glm::vec3(0.0f, 1.0f, 0.0f);
-	const glm::vec3 WORLD_DOWN = glm::vec3(0.0f, -1.0f, 0.0f);
-	const float YAW = 270.0f;
-	const float PITCH = 0.0f;
 
 	class Camera
 	{
 	public:
-		Camera(glm::vec3 position = WORLD_POS, glm::vec3 up = WORLD_UP, float yaw = YAW, float pitch = PITCH) 
-			: m_Position(position), m_WorldUp(up), m_Yaw(yaw), m_Pitch(pitch)
-		{
-			RecalculateViewMatrix();
-			const auto& win = Application::Get().GetWindow();
-			m_fullScreenWidth = win.GetWidth();
-			m_fullScreenHeight = win.GetHeight();
-		}
+		static constexpr glm::vec3 DEFAULT_FRONT = glm::vec3(0.0f, 0.0f, -1.0f);
+		static constexpr glm::vec3 DEFAULT_LOOKAT = glm::vec3(0.0f, 0.0f, 0.0f);
+		static constexpr glm::vec3 DEFAULT_POS = glm::vec3(0.0f, 0.0f, 10.0f);
+		static constexpr glm::vec3 DEFAULT_UP = glm::vec3(0.0f, 1.0f, 0.0f);
+		static constexpr glm::vec3 DEFAULT_DOWN = glm::vec3(0.0f, -1.0f, 0.0f);
+	
+		Camera(glm::vec3 position = DEFAULT_POS, glm::vec3 lookAt = DEFAULT_LOOKAT);
 
 		/* Camera Getters */
-		const float& GetYaw() const { return m_Yaw; }
-		const float& GetPitch() const { return m_Pitch; }
 		const glm::vec3& GetPosition() const { return m_Position; }
 
 		const glm::vec3& GetFront() const { return m_Front; }
@@ -40,25 +32,20 @@ namespace GLCore::Utils {
 		const float GetViewPortY() const { return m_viewPortY; }
 		const float GetViewPortWidth() const { return m_viewPortWidth; }
 		const float GetViewPortHeight() const { return m_viewPortHeight; }
-
-		/* Camera Setters */
-		void SetYaw(const float& yaw) { m_Yaw = yaw; RecalculateViewMatrix(); }
-		void SetPitch(const float& pitch) { m_Pitch = pitch; RecalculateViewMatrix(); }
-
-		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
-		void OffsetPosition(const glm::vec3& offset) { m_Position += offset; RecalculateViewMatrix(); }
-
+		
+		void SetWorldUp(bool isUp) { m_WorldUp = isUp ? DEFAULT_UP : DEFAULT_DOWN; }
 		void SetViewPortX(float x) { m_viewPortX = x; SetViewPort(); }
 		void SetViewPortY(float y) { m_viewPortY = y; SetViewPort(); }
 		void SetViewPortWidth(float width) { m_viewPortWidth = width; SetViewPort(); }
 		void SetViewPortHeight(float height) { m_viewPortHeight = height; SetViewPort(); }
-		
-		/* Camera Public Functions */
-		void OffsetYawPitch(const float& offsetY, const float& offsetP);
 
+		/* Camera Public Functions */
 		virtual void OnWindowResized(uint32_t width, uint32_t height);
 		virtual void OnImGuiRender();
-
+		
+		void UpdateViewMatrix(const glm::vec3& position, const glm::vec3& Front);
+		void UpdateViewMatrix_T(const glm::vec3& position, const glm::vec3& lookAt);
+		
 	protected:
 		void RecalculateViewMatrix();
 		virtual void RecalculateProjectionMatrix() = 0;
@@ -66,20 +53,19 @@ namespace GLCore::Utils {
 		void SetViewPort();
 		
 	protected:
+		/* Camera View Info */
+		glm::vec3 m_Position = { 0.0f,  0.0f,  0.0f };
+		glm::vec3 m_Front = { 0.0f,  0.0f, -1.0f };
+		glm::vec3 m_Up = { 0.0f,  1.0f,  0.0f };
+		glm::vec3 m_Right = { 1.0f,  0.0f,  0.0f };
+		glm::vec3 m_WorldUp = { 0.0f,  1.0f,  0.0f };
+
+
 		/* Camera Matrices */
 		glm::mat4 m_ProjectionMatrix;
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ViewProjectionMatrix;
-
-		/* Camera View Info */
-		glm::vec3 m_Position	=	{ 0.0f,  0.0f,  0.0f };
-		glm::vec3 m_Front		=	{ 0.0f,  0.0f, -1.0f };
-		glm::vec3 m_Up			=	{ 0.0f,  1.0f,  0.0f };
-		glm::vec3 m_Right		=	{ 1.0f,  0.0f,  0.0f };
-		glm::vec3 m_WorldUp		=	{ 0.0f,  1.0f,  0.0f };
 		
-		float m_Yaw = 0.0f;
-		float m_Pitch = 0.0f;
 
 		/* Camera glViewport Info [in percentage] */
 		float m_viewPortX = 0.0f;
