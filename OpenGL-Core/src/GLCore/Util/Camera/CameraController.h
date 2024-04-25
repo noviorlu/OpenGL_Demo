@@ -20,15 +20,26 @@ namespace GLCore::Utils {
 		virtual void OnImGuiRender();
 
 		virtual bool OnMouseScrolled(MouseScrolledEvent& e) { return false; }
-		virtual bool OnWindowResized(WindowResizeEvent& e) { return false; }
+		virtual bool OnWindowResized(WindowResizeEvent& e) {
+			m_Camera->OnWindowResized(e.GetWidth(), e.GetHeight());
+			return false;
+		}
 		virtual bool OnMousePressed(MouseButtonPressedEvent& e) { return false; }
 		virtual bool OnMouseReleased(MouseButtonReleasedEvent& e) { return false; }
-	
+
+	protected:
+		void KeyboardMovement(Timestep ts);
+
 	protected:
 		Camera* m_Camera;
-		glm::vec3 m_tempPosition;
+		glm::vec3 m_Position;
+		glm::vec3 m_Target;
+
+		float m_Yaw = 0.0f;
+		float m_Pitch = 0.0f;
 
 		float m_CameraTranslationSpeed = 5.0f;
 		float m_CameraRotationSpeed = 180.0f;
+		
 	};
 }

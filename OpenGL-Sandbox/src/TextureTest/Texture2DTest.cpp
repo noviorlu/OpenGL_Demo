@@ -77,7 +77,7 @@ void Texture2DTest::OnUpdate(Timestep ts)
 	m_Shader->Bind();
 	m_Texture->Bind(0);
 	m_Shader->SetUniform1i("u_Texture", 0);
-	m_Shader->SetUniformMat4f("u_MVP", m_CameraController.GetCamera().GetViewProjectionMatrix());
+	m_Shader->SetUniformMat4f("u_MVP", m_CameraController.GetCamera()->GetViewProjectionMatrix());
 
 	m_va->Bind();
 	GLCore::Utils::Renderer::Draw(*m_va, *m_ib, *m_Shader);

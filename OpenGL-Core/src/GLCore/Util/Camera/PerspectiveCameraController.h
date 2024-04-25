@@ -20,16 +20,21 @@ namespace GLCore::Utils {
 
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
-		bool OnWindowResized(WindowResizeEvent& e);
 		bool OnMousePressed(MouseButtonPressedEvent& e);
 		bool OnMouseReleased(MouseButtonReleasedEvent& e);
 
+		void MouseMovement(Timestep ts);
+		void OffsetYawPitch(const float& offsetY, const float& offsetP);
+		void OffsetYawPitch_Freelook();
+		void OffsetYawPitch_Orbit();
+	
 	private:
-
 		float m_MouseSensitivity = 0.1f;
 		float m_CameraTranslationSpeed = 5.0f;
 		float m_CameraRotationSpeed = 180.0f;
-		
+		bool isFreelook = true;
+		float m_Radius = 10.0f;
+
 		bool m_LeftMousePressed = false;
 		bool RightMousePressed = false;
 		glm::vec2 m_InitialMousePosition;
