@@ -2,7 +2,6 @@
 #include "Camera.h"
 
 #include <glad/glad.h>
-#include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <imgui.h>
 
@@ -64,11 +63,6 @@ namespace GLCore::Utils {
 
     void Camera::OnImGuiRender() {
         ImGui::Text("Camera");
-        if(ImGui::InputFloat3("Camera Position", glm::value_ptr(m_Position)))
-			RecalculateViewMatrix();
-        //if(ImGui::DragFloat2("Yaw and Pitch", &m_Yaw))
-        //    RecalculateViewMatrix();
-        
         if(ImGui::DragFloat2("ViewPort XY Perc", &m_viewPortX, 0, 1))
 			SetViewPort();
 		if(ImGui::DragFloat2("ViewPort WH Perc", &m_viewPortWidth, 0, 1))

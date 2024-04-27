@@ -9,9 +9,9 @@ namespace GLCore::Utils {
 	class Camera
 	{
 	public:
-		static constexpr glm::vec3 DEFAULT_FRONT = glm::vec3(0.0f, 0.0f, -1.0f);
+		static constexpr glm::vec3 DEFAULT_FRONT = glm::vec3(0.0f, 0.0f, 1.0f);
 		static constexpr glm::vec3 DEFAULT_LOOKAT = glm::vec3(0.0f, 0.0f, 0.0f);
-		static constexpr glm::vec3 DEFAULT_POS = glm::vec3(0.0f, 0.0f, 10.0f);
+		static constexpr glm::vec3 DEFAULT_POS = glm::vec3(0.0f, 0.0f, 0.0f);
 		static constexpr glm::vec3 DEFAULT_UP = glm::vec3(0.0f, 1.0f, 0.0f);
 		static constexpr glm::vec3 DEFAULT_DOWN = glm::vec3(0.0f, -1.0f, 0.0f);
 	
@@ -33,6 +33,7 @@ namespace GLCore::Utils {
 		const float GetViewPortWidth() const { return m_viewPortWidth; }
 		const float GetViewPortHeight() const { return m_viewPortHeight; }
 		
+		void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateViewMatrix(); }
 		void SetWorldUp(bool isUp) { m_WorldUp = isUp ? DEFAULT_UP : DEFAULT_DOWN; }
 		void SetViewPortX(float x) { m_viewPortX = x; SetViewPort(); }
 		void SetViewPortY(float y) { m_viewPortY = y; SetViewPort(); }
@@ -44,7 +45,7 @@ namespace GLCore::Utils {
 		virtual void OnImGuiRender();
 		
 		void UpdateViewMatrix(const glm::vec3& position, const glm::vec3& Front);
-		void UpdateViewMatrix_T(const glm::vec3& position, const glm::vec3& lookAt);
+		void UpdateViewMatrix_T(const glm::vec3& camPos, const glm::vec3& lookAt);
 		
 	protected:
 		void RecalculateViewMatrix();

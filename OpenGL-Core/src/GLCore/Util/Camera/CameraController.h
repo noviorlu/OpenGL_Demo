@@ -10,7 +10,18 @@ namespace GLCore::Utils {
 	class CameraController
 	{
 	public:
-		CameraController() = default;
+		static constexpr float CC_YAW = -90.0f;
+		static constexpr float CC_PITCH = 0.0f;
+		static constexpr float CC_SPEED = 2.5f;
+		static constexpr float CC_SENSITIVITY = 0.1f;
+
+		CameraController(
+			float yaw = CC_YAW,
+			float pitch = CC_PITCH,
+			float speed = CC_SPEED,
+			float sensitivity = CC_SENSITIVITY
+		)
+			: m_Yaw(yaw), m_Pitch(pitch), m_CameraTranslationSpeed(speed), m_CameraRotationSpeed(sensitivity) {}
 
 		Camera* GetCamera() { return m_Camera; } // non-const version
 		const Camera* GetCamera() const { return m_Camera; } // const version
@@ -32,8 +43,10 @@ namespace GLCore::Utils {
 
 	protected:
 		Camera* m_Camera;
-		glm::vec3 m_Position;
-		glm::vec3 m_Target;
+		glm::vec3 m_Position = glm::vec3(0, 0, 0);
+		glm::vec3 m_Target = glm::vec3(0,0,0);
+		bool isFreelook = true;
+		float m_Radius = 10.0f;
 
 		float m_Yaw = 0.0f;
 		float m_Pitch = 0.0f;

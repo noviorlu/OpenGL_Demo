@@ -5,9 +5,18 @@
 #include "GLCore/Core/KeyCodes.h"
 #include <imgui.h>
 namespace GLCore::Utils {
-
-	PerspectiveCameraController::PerspectiveCameraController(){
+	PerspectiveCameraController::PerspectiveCameraController()
+		: CameraController()
+	{
 		m_Camera = new PerspectiveCamera();
+	}
+
+	PerspectiveCameraController::PerspectiveCameraController(float yaw, float pitch, glm::vec3 position)
+		: CameraController(yaw, pitch, CameraController::CC_SPEED, CameraController::CC_SENSITIVITY)
+	{
+		m_Camera = new PerspectiveCamera(position);
+		m_Position = position;
+		OffsetYawPitch_Freelook();
 	}
 
 	PerspectiveCameraController::~PerspectiveCameraController() {
@@ -26,6 +35,7 @@ namespace GLCore::Utils {
 		ImGui::Text("Perspective Camera Controller");
 		ImGui::SliderFloat("Camera Translation Speed", &m_CameraTranslationSpeed, 0.1f, 10.0f);
 		ImGui::SliderFloat("Mouse Sensitivity", &m_MouseSensitivity, 0.1f, 10.0f);
+		ImGui::Checkbox("Freelook", &isFreelook);
 	}
 
 	bool PerspectiveCameraController::OnMouseScrolled(MouseScrolledEvent& e)
@@ -114,12 +124,12 @@ namespace GLCore::Utils {
 		float pitchRad = glm::radians(m_Pitch);
 
 		// Spherical to Cartesian coordinates conversion
-		glm::vec3 position;
-		position.x = m_Target.x + m_Radius * cos(pitchRad) * cos(yawRad);
-		position.y = m_Target.y + m_Radius * sin(pitchRad);
-		position.z = m_Target.z + m_Radius * cos(pitchRad) * sin(yawRad);
+		//glm::vec3 position;
+		m_Position.x = m_Target.x + m_Radius * cos(pitchRad) * cos(yawRad);
+		m_Position.y = m_Target.y + m_Radius * sin(pitchRad);
+		m_Position.z = m_Target.z + m_Radius * cos(pitchRad) * sin(yawRad);
 
-		m_Position = position;
+		//m_Position = position;
 		m_Camera->UpdateViewMatrix_T(m_Position, m_Target);
 	}
 }

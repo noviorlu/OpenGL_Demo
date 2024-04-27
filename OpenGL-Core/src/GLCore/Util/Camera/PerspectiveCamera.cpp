@@ -15,6 +15,16 @@ namespace GLCore::Utils {
 		RecalculateProjectionMatrix();
 	}
 
+	PerspectiveCamera::PerspectiveCamera(const glm::vec3 position)
+		: Camera(position, Camera::DEFAULT_LOOKAT)
+	{
+		m_Fov = DEFAULT_FOV;
+		m_Aspect = DEFAULT_ASPECT;
+		m_Near = DEFAULT_ZNEAR;
+		m_Far = DEFAULT_ZFAR;
+		RecalculateProjectionMatrix();
+	}
+
 	void PerspectiveCamera::OffsetFov(float offset) {
 		if (m_Fov >= 1.0f && m_Fov <= 160.0f) {
 			m_Fov += offset;

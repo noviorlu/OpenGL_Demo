@@ -4,6 +4,7 @@ using namespace GLCore;
 using namespace GLCore::Utils;
 
 CubeTest::CubeTest()
+	: m_CameraController(270,0,glm::vec3(0,0,3))
 {
 	m_DebugName = "Cube Test";
 }

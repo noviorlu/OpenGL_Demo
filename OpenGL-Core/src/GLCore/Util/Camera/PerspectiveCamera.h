@@ -7,13 +7,14 @@ namespace GLCore::Utils {
 
 	class PerspectiveCamera : public Camera
 	{
+	public:
 		static constexpr float DEFAULT_FOV = 45.0f;
 		static constexpr float DEFAULT_ASPECT = 16.0f / 9.0f;
 		static constexpr float DEFAULT_ZNEAR = 0.1f;
 		static constexpr float DEFAULT_ZFAR = 100.0f;
 
-	public:
 		PerspectiveCamera(float fov = DEFAULT_FOV, float aspect = DEFAULT_ASPECT, float n = DEFAULT_ZNEAR, float f = DEFAULT_ZFAR);
+		PerspectiveCamera(const glm::vec3 position);
 
 		void SetFov(float fov)	{ m_Fov = fov;	RecalculateProjectionMatrix(); }
 		void SetNear(float n)	{ m_Near = n;	RecalculateProjectionMatrix(); }

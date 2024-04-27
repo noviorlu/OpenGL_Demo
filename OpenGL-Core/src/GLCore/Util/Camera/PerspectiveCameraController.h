@@ -13,6 +13,7 @@ namespace GLCore::Utils {
 	{
 	public:
 		PerspectiveCameraController();
+		PerspectiveCameraController(float yaw, float pitch, glm::vec3 position);
 		~PerspectiveCameraController();
 
 		void OnUpdate(Timestep ts) override;
@@ -27,13 +28,12 @@ namespace GLCore::Utils {
 		void OffsetYawPitch(const float& offsetY, const float& offsetP);
 		void OffsetYawPitch_Freelook();
 		void OffsetYawPitch_Orbit();
-	
+
 	private:
 		float m_MouseSensitivity = 0.1f;
 		float m_CameraTranslationSpeed = 5.0f;
 		float m_CameraRotationSpeed = 180.0f;
-		bool isFreelook = true;
-		float m_Radius = 10.0f;
+		
 
 		bool m_LeftMousePressed = false;
 		bool RightMousePressed = false;
