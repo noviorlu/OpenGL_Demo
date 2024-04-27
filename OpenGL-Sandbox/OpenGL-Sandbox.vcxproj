@@ -59,7 +59,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>GLCORE_PLATFORM_WINDOWS;GLCORE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\OpenGL-Core\vendor\spdlog\include;..\OpenGL-Core\src;..\OpenGL-Core\vendor;..\OpenGL-Core\vendor\glm;..\OpenGL-Core\vendor\Glad\include;..\OpenGL-Core\vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\OpenGL-Core\vendor\assimp\include;..\OpenGL-Core\vendor\spdlog\include;..\OpenGL-Core\src;..\OpenGL-Core\vendor;..\OpenGL-Core\vendor\glm;..\OpenGL-Core\vendor\Glad\include;..\OpenGL-Core\vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -70,6 +70,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\OpenGL-Core\vendor\assimp\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -97,6 +99,7 @@
     <ClInclude Include="src\BatchRenderTest\BatchRenderTest.h" />
     <ClInclude Include="src\ClearColorTest\ClearColorTest.h" />
     <ClInclude Include="src\CubeTest\CubeTest.h" />
+    <ClInclude Include="src\LightingTest\LightingTest.h" />
     <ClInclude Include="src\TestMenu\TestMenu.h" />
     <ClInclude Include="src\TextureTest\Texture2DTest.h" />
   </ItemGroup>
@@ -104,6 +107,7 @@
     <ClCompile Include="src\BatchRenderTest\BatchRenderTest.cpp" />
     <ClCompile Include="src\ClearColorTest\ClearColorTest.cpp" />
     <ClCompile Include="src\CubeTest\CubeTest.cpp" />
+    <ClCompile Include="src\LightingTest\LightingTest.cpp" />
     <ClCompile Include="src\RenderEngine.cpp" />
     <ClCompile Include="src\TestMenu\TestMenu.cpp" />
     <ClCompile Include="src\TextureTest\Texture2DTest.cpp" />
