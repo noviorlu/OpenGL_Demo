@@ -92,7 +92,8 @@ namespace GLCore::Utils {
 
 	void PerspectiveCameraController::OffsetYawPitch(const float& offsetY, const float& offsetP) {
 		m_Yaw += offsetY;
-		m_Pitch += offsetP;
+		if(isFreelook) m_Pitch += offsetP;
+		else m_Pitch -= offsetP;
 
 		if (m_Yaw > 360.0f) m_Yaw = 0.0f;
 		else if (m_Yaw < 0.0f) m_Yaw = 360.0f;

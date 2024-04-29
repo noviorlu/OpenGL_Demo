@@ -73,6 +73,9 @@
       <AdditionalDependencies>assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)..\OpenGL-Core\vendor\assimp\lib</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(ProjectDir)..\OpenGL-Core\vendor\assimp\lib\assimp-vc143-mtd.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -99,7 +102,7 @@
     <ClInclude Include="src\BatchRenderTest\BatchRenderTest.h" />
     <ClInclude Include="src\ClearColorTest\ClearColorTest.h" />
     <ClInclude Include="src\CubeTest\CubeTest.h" />
-    <ClInclude Include="src\LightingTest\LightingTest.h" />
+    <ClInclude Include="src\ModelTest\ModelTest.h" />
     <ClInclude Include="src\TestMenu\TestMenu.h" />
     <ClInclude Include="src\TextureTest\Texture2DTest.h" />
   </ItemGroup>
@@ -107,7 +110,7 @@
     <ClCompile Include="src\BatchRenderTest\BatchRenderTest.cpp" />
     <ClCompile Include="src\ClearColorTest\ClearColorTest.cpp" />
     <ClCompile Include="src\CubeTest\CubeTest.cpp" />
-    <ClCompile Include="src\LightingTest\LightingTest.cpp" />
+    <ClCompile Include="src\ModelTest\ModelTest.cpp" />
     <ClCompile Include="src\RenderEngine.cpp" />
     <ClCompile Include="src\TestMenu\TestMenu.cpp" />
     <ClCompile Include="src\TextureTest\Texture2DTest.cpp" />
@@ -116,6 +119,17 @@
     <ProjectReference Include="..\OpenGL-Core\OpenGL-Core.vcxproj">
       <Project>{20200B5F-8CD5-8354-15CA-7D2B817E7A58}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\model_loading_frag.glsl" />
+    <None Include="assets\shaders\model_loading_vert.glsl" />
+    <None Include="assets\shaders\test.frag.glsl" />
+    <None Include="assets\shaders\test.vert.glsl" />
+    <None Include="assets\shaders\test_Batch_frag.glsl" />
+    <None Include="assets\shaders\test_Batch_vert.glsl" />
+    <None Include="assets\shaders\test_cube_vert.glsl" />
+    <None Include="assets\shaders\test_texture2D_frag.glsl" />
+    <None Include="assets\shaders\test_texture2D_vert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

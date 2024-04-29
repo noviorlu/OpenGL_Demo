@@ -5,7 +5,7 @@
 
 namespace GLCore::Utils {
 
-	Texture::Texture(const std::string path)
+	Texture::Texture(const std::string& path)
 		: m_RendererID(0), m_FilePath(path), m_LocalBuffer(nullptr), m_Width(0), m_Height(0), m_BPP(0)
 	{
 		/* flip our texture upside down since OpenGL button-left is 0,0, while img storage is top-left */
@@ -37,6 +37,12 @@ namespace GLCore::Utils {
 		glBindTexture(GL_TEXTURE_2D, 0);
 		if (m_LocalBuffer)
 			stbi_image_free(m_LocalBuffer);
+	}
+
+	Texture::Texture(const std::string& path, const std::string& type)
+		: Texture(path)
+	{
+		m_Type = type;
 	}
 
 	Texture::~Texture()
