@@ -3,9 +3,9 @@
 #include <string>
 #include <memory>
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+//#include <assimp/Importer.hpp>
+//#include <assimp/scene.h>
+//#include <assimp/postprocess.h>
 
 namespace GLCore::Utils {
 	class Shader;
@@ -31,9 +31,10 @@ namespace GLCore::Utils {
 
 		void Draw(Shader& shader);
 		void LoadModel(const std::string& path);
-		void processNode(aiNode* node, const aiScene* scene);
-		std::unique_ptr<Mesh> processMesh(aiMesh* mesh, const aiScene* scene);
-		std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
+		
+		//void processNode(aiNode* node, const aiScene* scene);
+		//std::unique_ptr<Mesh> processMesh(aiMesh* mesh, const aiScene* scene);
+		//std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 
 		const glm::mat4& GetModelMatrix();
 	

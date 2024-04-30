@@ -532,6 +532,7 @@
     <ClCompile Include="src\GLCore\Util\GLAbstract\VertexBuffer.cpp" />
     <ClCompile Include="src\GLCore\Util\Model\Mesh.cpp" />
     <ClCompile Include="src\GLCore\Util\Model\Model.cpp" />
+    <ClCompile Include="src\GLCore\Util\Model\ObjLoader.cpp" />
     <ClCompile Include="src\GLCore\Util\OpenGLDebug.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
