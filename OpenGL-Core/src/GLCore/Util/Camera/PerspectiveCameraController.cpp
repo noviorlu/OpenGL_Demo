@@ -132,10 +132,13 @@ namespace GLCore::Utils {
 
 	void PerspectiveCameraController::OffsetYawPitch_Freelook() {
 		// calculate the new Front vector
+		float yawRad = glm::radians(m_Yaw + 180);
+		float pitchRad = glm::radians(m_Pitch);
+
 		glm::vec3 front;
-		front.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
-		front.y = sin(glm::radians(m_Pitch));
-		front.z = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+		front.x = cos(yawRad) * cos(pitchRad);
+		front.y = sin(pitchRad);
+		front.z = sin(yawRad) * cos(pitchRad);
 
 		m_Camera->UpdateViewMatrix(m_Position, front);
 	}

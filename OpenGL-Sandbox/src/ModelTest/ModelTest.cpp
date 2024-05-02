@@ -5,7 +5,7 @@ using namespace GLCore;
 using namespace GLCore::Utils;
 
 ModelTest::ModelTest()
-	: m_CameraController(270,0,glm::vec3(0,0,20))
+	: m_CameraController(0,0,glm::vec3(20,0,0))
 {
 	m_DebugName = "Model Test";
 }
@@ -33,24 +33,24 @@ void ModelTest::OnAttach()
 		"assets/shaders/model_loading_frag.glsl"
 	);
 
-	//m_Model = new Model(
-	//	glm::vec3(0.0, 0.0, 0.0),
-	//	glm::vec3(180.0, 0.0, 0.0),
-	//	glm::vec3(1, 1, 1)
-	//);
-	//{ glTFLoader ldr = glTFLoader("assets/models/map/scene.gltf", m_Model); }
+	m_Model = new Model(
+		glm::vec3(0.0, -2.0, 0.0),
+		glm::vec3(180.0, 0.0, 0.0),
+		glm::vec3(2, 2, 2)
+	);
+	{ glTFLoader ldr = glTFLoader("assets/models/mary/mary.gltf", m_Model); }
 	//m_Model = new Model(
 	//	glm::vec3(0.0, 0.0, 0.0),
 	//	glm::vec3(180.0, 0.0, 0.0),
 	//	glm::vec3(0.03, 0.03, 0.03)
 	//);
 	//{ glTFLoader ldr = glTFLoader("assets/models/scroll/scene.gltf", m_Model); }
-	m_Model = new Model(
-		glm::vec3(0.0, 0.0, 0.0),
-		glm::vec3(180.0, 0.0, 0.0),
-		glm::vec3(0.03, 0.03, 0.03)
-	);
-	{ glTFLoader ldr = glTFLoader("assets/models/sword/scene.gltf", m_Model); }
+	//m_Model = new Model(
+	//	glm::vec3(0.0, 0.0, 0.0),
+	//	glm::vec3(180.0, 0.0, 0.0),
+	//	glm::vec3(0.03, 0.03, 0.03)
+	//);
+	//{ glTFLoader ldr = glTFLoader("assets/models/sword/scene.gltf", m_Model); }
 }
 
 void ModelTest::OnDetach()

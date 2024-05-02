@@ -59,7 +59,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>GLCORE_PLATFORM_WINDOWS;GLCORE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\OpenGL-Core\vendor\assimp\include;..\OpenGL-Core\vendor\spdlog\include;..\OpenGL-Core\src;..\OpenGL-Core\vendor;..\OpenGL-Core\vendor\glm;..\OpenGL-Core\vendor\Glad\include;..\OpenGL-Core\vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\OpenGL-Core\vendor\spdlog\include;..\OpenGL-Core\src;..\OpenGL-Core\vendor;..\OpenGL-Core\vendor\glm;..\OpenGL-Core\vendor\Glad\include;..\OpenGL-Core\vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -70,8 +70,9 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\OpenGL-Core\vendor\assimp\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(ProjectDir)..\OpenGL-Core\vendor\assimp\lib\assimp-vc143-mtd.dll" "$(OutDir)"</Command>
