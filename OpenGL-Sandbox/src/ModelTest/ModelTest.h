@@ -18,10 +18,6 @@ private:
 	GLCore::Utils::Shader* m_Shader;
 	GLCore::Utils::Model* m_Model;
 
-	GLCore::Utils::VertexArray* m_va;
-	GLCore::Utils::VertexBuffer* m_vb;
-	GLCore::Utils::IndexBuffer* m_ib;
-
 	GLCore::Utils::PerspectiveCameraController m_CameraController;
 	float m_time = 0.0f;
 

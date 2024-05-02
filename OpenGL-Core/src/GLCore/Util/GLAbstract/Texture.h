@@ -7,13 +7,19 @@ namespace GLCore::Utils {
 
 	class Texture {
 	public:
-		std::string m_Type;
-		unsigned int m_RendererID;
-		std::string m_FilePath;
+		enum class TextureType {
+			DIFFUSE,
+			SPECULAR,
+			NORMAL,
+			HEIGHT
+		};
 
+		TextureType m_Type;
+		std::string m_FilePath;
+		unsigned int m_RendererID;
 	public:
 		Texture(const std::string& path);
-		Texture(const std::string& path, const std::string& type);
+		Texture(const std::string& path, TextureType type);
 		~Texture();
 
 		void Bind(unsigned int slot = 0) const;

@@ -20,6 +20,8 @@ public:
 		testMenu->RegisterTest<CubeTest>("Test cube3D");
 		testMenu->RegisterTest<ModelTest>("Test Model");
 		PushLayer(testMenu);
+
+		testMenu->Preset("Test Model");
 	}
 };
 

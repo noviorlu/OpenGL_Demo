@@ -15,5 +15,6 @@
 #include "GLCore/Util/Camera/PerspectiveCameraController.h"
 
 #include "GLCore/Util/Model/Model.h"
+#include "GLCore/Util/Model/glTFLoader.h"
 
 #include "GLCore/Util/OpenGLDebug.h"

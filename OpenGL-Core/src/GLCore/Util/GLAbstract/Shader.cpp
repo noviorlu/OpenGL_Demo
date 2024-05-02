@@ -5,7 +5,7 @@
 
 namespace GLCore::Utils {
 
-	static std::string ReadFileAsString(const std::string& filepath)
+	static std::string ReadFileAsString_deprec(const std::string& filepath)
 	{
 		std::string result;
 		std::ifstream in(filepath, std::ios::in | std::ios::binary);
@@ -67,8 +67,8 @@ namespace GLCore::Utils {
 	
 	void Shader::LoadFromGLSLTextFiles(const std::string& vertexShaderPath, const std::string& fragmentShaderPath)
 	{
-		std::string vertexSource = ReadFileAsString(vertexShaderPath);
-		std::string fragmentSource = ReadFileAsString(fragmentShaderPath);
+		std::string vertexSource = ReadFileAsString_deprec(vertexShaderPath);
+		std::string fragmentSource = ReadFileAsString_deprec(fragmentShaderPath);
 
 		GLuint program = glCreateProgram();
 		int glShaderIDIndex = 0;
