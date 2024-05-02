@@ -3,7 +3,10 @@
 
 #include "GLCore/Core/Input.h"
 #include "GLCore/Core/KeyCodes.h"
+#include <glm/gtc/type_ptr.hpp>
+
 #include <imgui.h>
+
 namespace GLCore::Utils {
 	PerspectiveCameraController::PerspectiveCameraController()
 		: CameraController()
@@ -31,11 +34,28 @@ namespace GLCore::Utils {
 
 	void PerspectiveCameraController::OnImGuiRender()
 	{
+		ImGui::Begin("Perspective Camera Controller");
 		CameraController::OnImGuiRender();
-		ImGui::Text("Perspective Camera Controller");
-		ImGui::SliderFloat("Camera Translation Speed", &m_CameraTranslationSpeed, 0.1f, 10.0f);
-		ImGui::SliderFloat("Mouse Sensitivity", &m_MouseSensitivity, 0.1f, 10.0f);
-		ImGui::Checkbox("Freelook", &isFreelook);
+		if(ImGui::DragFloat2("Yaw/Pitch", &m_Yaw, 0.0f)){
+			OffsetYawPitch(0.0f, 0.0f);
+		}
+
+		ImGui::Text("Camera Control");
+		ImGui::SliderFloat("Translation Speed", &m_CameraTranslationSpeed, 0.1f, 10.0f);
+		ImGui::SliderFloat("Rotation Speed", &m_CameraRotationSpeed, 0.1f, 10.0f);
+
+		if(ImGui::Checkbox("isFreelook? Or Orbit", &isFreelook)) {
+			OffsetYawPitch(0.0f, 0.0f);
+		}
+
+		ImGui::Text("Camera Orbit");
+		if (ImGui::InputFloat3("Camera Target", glm::value_ptr(m_Target))) {
+			OffsetYawPitch(0.0f, 0.0f);
+		}
+		if (ImGui::SliderFloat("Orbit Radius", &m_Radius, 5.0f, 100.0f)) {
+			OffsetYawPitch(0.0f, 0.0f);
+		}
+		ImGui::End();
 	}
 
 	bool PerspectiveCameraController::OnMouseScrolled(MouseScrolledEvent& e)

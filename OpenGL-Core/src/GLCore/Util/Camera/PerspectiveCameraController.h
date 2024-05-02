@@ -18,7 +18,6 @@ namespace GLCore::Utils {
 
 		void OnUpdate(Timestep ts) override;
 		void OnImGuiRender() override;
-
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnMousePressed(MouseButtonPressedEvent& e);

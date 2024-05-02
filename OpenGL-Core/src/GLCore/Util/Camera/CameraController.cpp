@@ -22,13 +22,9 @@ namespace GLCore::Utils {
 	{
 		m_Camera->OnImGuiRender();
 
-		ImGui::Text("Camera Controller");
+		ImGui::Text("Camera Transform");
 		if (ImGui::InputFloat3("Camera Position", glm::value_ptr(m_Position)))
 			m_Camera->SetPosition(m_Position);
-		ImGui::InputFloat3("Camera Target", glm::value_ptr(m_Target));
-		ImGui::SliderFloat("Translation Speed", &m_CameraTranslationSpeed, 0.1f, 10.0f);
-		ImGui::SliderFloat("Rotation Speed", &m_CameraRotationSpeed, 0.1f, 10.0f);
-		ImGui::DragFloat2("Yaw/Pitch", &m_Yaw, 0.0f);
 	}
 
 	void CameraController::KeyboardMovement(Timestep ts) {

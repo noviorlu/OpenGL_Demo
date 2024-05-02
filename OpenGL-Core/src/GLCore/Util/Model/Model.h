@@ -17,11 +17,15 @@ namespace GLCore::Utils {
 		std::string m_Directory;
 		std::vector<std::shared_ptr<Mesh>> m_Meshes;
 		std::unordered_map<std::string, std::shared_ptr<Texture>> m_LoadedTextures;
+	
+		bool m_AutoRotate = false;
+		float m_RotationSpeed = 1.0f;
 	public:
 		Model() {}
 		Model(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale);
 		~Model() {}
 		
+		void OnImGuiRender();
 		void Draw(Shader& shader);
 	};
 }

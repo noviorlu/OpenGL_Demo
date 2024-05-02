@@ -62,7 +62,7 @@ namespace GLCore::Utils {
 	}
 
     void Camera::OnImGuiRender() {
-        ImGui::Text("Camera");
+        ImGui::Text("Camera ViewPort");
         if(ImGui::DragFloat2("ViewPort XY Perc", &m_viewPortX, 0, 1))
 			SetViewPort();
 		if(ImGui::DragFloat2("ViewPort WH Perc", &m_viewPortWidth, 0, 1))

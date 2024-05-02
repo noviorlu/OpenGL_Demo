@@ -122,7 +122,7 @@ namespace GLCore::Utils {
 		else {
 			curTrans = new Transform(
 				translation, 
-				glm::degrees(glm::eulerAngles(rotation)), 
+				rotation, 
 				scale, 
 				prevTrans
 			);

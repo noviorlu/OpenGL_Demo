@@ -11,8 +11,8 @@ ModelTest::ModelTest()
 }
 
 ModelTest::~ModelTest() {
-	delete m_Shader;
-	delete m_Model;
+		delete m_Model;
+		delete m_Shader;
 }
 
 void ModelTest::OnAttach()
@@ -33,18 +33,28 @@ void ModelTest::OnAttach()
 		"assets/shaders/model_loading_frag.glsl"
 	);
 
+	//m_Model = new Model(
+	//	glm::vec3(0.0, 0.0, 0.0),
+	//	glm::vec3(180.0, 0.0, 0.0),
+	//	glm::vec3(1, 1, 1)
+	//);
+	//{ glTFLoader ldr = glTFLoader("assets/models/map/scene.gltf", m_Model); }
+	//m_Model = new Model(
+	//	glm::vec3(0.0, 0.0, 0.0),
+	//	glm::vec3(180.0, 0.0, 0.0),
+	//	glm::vec3(0.03, 0.03, 0.03)
+	//);
+	//{ glTFLoader ldr = glTFLoader("assets/models/scroll/scene.gltf", m_Model); }
 	m_Model = new Model(
 		glm::vec3(0.0, 0.0, 0.0),
-		glm::vec3(0.0, 0.0, 0.0),
-		glm::vec3(1, 1, 1)
+		glm::vec3(180.0, 0.0, 0.0),
+		glm::vec3(0.03, 0.03, 0.03)
 	);
-	{ glTFLoader ldr = glTFLoader("assets/models/map/scene.gltf", m_Model); }
+	{ glTFLoader ldr = glTFLoader("assets/models/sword/scene.gltf", m_Model); }
 }
 
 void ModelTest::OnDetach()
 {
-	delete m_Shader;
-	delete m_Model;
 }
 
 void ModelTest::OnEvent(Event& event){
@@ -66,8 +76,7 @@ void ModelTest::OnUpdate(Timestep ts)
 
 void ModelTest::OnImGuiRender()
 {
-	ImGui::Begin("Controls");
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	ImGui::Text("Application average\n %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	m_CameraController.OnImGuiRender();
-	ImGui::End();
+	m_Model->OnImGuiRender();
 }

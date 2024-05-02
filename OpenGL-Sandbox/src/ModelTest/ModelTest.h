@@ -3,6 +3,8 @@
 #include <GLCore.h>
 #include <GLCoreUtils.h>
 
+#include <vector>
+
 class ModelTest : public GLCore::Layer
 {
 public:
