@@ -5,6 +5,8 @@
 #include "BatchRenderTest/BatchRenderTest.h"
 #include "CubeTest/CubeTest.h"
 #include "ModelTest/ModelTest.h"
+#include "MatTest/MatTest.h"
+
 using namespace GLCore;
 
 class RenderEngine : public Application
@@ -19,9 +21,10 @@ public:
 		testMenu->RegisterTest<BatchRenderTest>("Test BatchRender");
 		testMenu->RegisterTest<CubeTest>("Test cube3D");
 		testMenu->RegisterTest<ModelTest>("Test Model");
+		testMenu->RegisterTest<MatTest>("Test Material");
 		PushLayer(testMenu);
 
-		testMenu->Preset("Test Model");
+		testMenu->Preset("Test Material");
 	}
 };
 

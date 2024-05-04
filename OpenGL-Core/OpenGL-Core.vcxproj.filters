@@ -1274,6 +1274,7 @@
     <ClInclude Include="src\GLCore\Util\Transform.hpp" />
     <ClInclude Include="src\GLCore\Util\Common\File.hpp" />
     <ClInclude Include="src\GLCore\Util\Light\Light.h" />
+    <ClInclude Include="src\GLCore\Util\Model\Material.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GLCore\Core\Application.cpp">

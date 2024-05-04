@@ -38,10 +38,10 @@ namespace GLCore::Utils {
 	public:
 		// Individual Transform for each mesh
 		Transform* m_Transform;
-		
+
 		std::vector<Vertex>       m_Vertices;
 		std::vector<unsigned int> m_Indices;
-		std::vector<std::shared_ptr<Texture>>     m_Textures;
+		std::vector<std::shared_ptr<Texture>> m_Textures;
 
 		std::unique_ptr<VertexArray>	m_VAO;
 		std::unique_ptr<VertexBuffer>	m_VBO;

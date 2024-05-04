@@ -4,11 +4,10 @@
 #include <unordered_map>
 
 #include "Mesh.h"
+#include "Material.h"
 #include "../Transform.hpp"
 
 namespace GLCore::Utils {
-	class Shader;
-
 	class Model {
 	public:
 		// World Transform
@@ -16,7 +15,7 @@ namespace GLCore::Utils {
 		
 		std::string m_Directory;
 		std::vector<std::shared_ptr<Mesh>> m_Meshes;
-		std::unordered_map<std::string, std::shared_ptr<Texture>> m_LoadedTextures;
+		std::unordered_map<std::string, std::shared_ptr<Texture>> m_TexturePool;
 	
 		bool m_AutoRotate = false;
 		float m_RotationSpeed = 1.0f;
@@ -26,6 +25,6 @@ namespace GLCore::Utils {
 		~Model() {}
 		
 		void OnImGuiRender();
-		void Draw(Shader& shader);
+		void Draw(GLCore::Utils::Shader& shader);
 	};
 }

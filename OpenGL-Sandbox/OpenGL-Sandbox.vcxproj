@@ -103,6 +103,7 @@
     <ClInclude Include="src\BatchRenderTest\BatchRenderTest.h" />
     <ClInclude Include="src\ClearColorTest\ClearColorTest.h" />
     <ClInclude Include="src\CubeTest\CubeTest.h" />
+    <ClInclude Include="src\MatTest\MatTest.h" />
     <ClInclude Include="src\ModelTest\ModelTest.h" />
     <ClInclude Include="src\TestMenu\TestMenu.h" />
     <ClInclude Include="src\TextureTest\Texture2DTest.h" />
@@ -111,6 +112,7 @@
     <ClCompile Include="src\BatchRenderTest\BatchRenderTest.cpp" />
     <ClCompile Include="src\ClearColorTest\ClearColorTest.cpp" />
     <ClCompile Include="src\CubeTest\CubeTest.cpp" />
+    <ClCompile Include="src\MatTest\MatTest.cpp" />
     <ClCompile Include="src\ModelTest\ModelTest.cpp" />
     <ClCompile Include="src\RenderEngine.cpp" />
     <ClCompile Include="src\TestMenu\TestMenu.cpp" />

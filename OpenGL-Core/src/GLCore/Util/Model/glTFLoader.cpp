@@ -143,26 +143,35 @@ namespace GLCore::Utils {
 	void glTFLoader::loadMesh(unsigned int indMesh, Transform* curTrans)
 	{
 		// Get all accessor indices
-		unsigned int posAccInd = JSON["meshes"][indMesh]["primitives"][0]["attributes"]["POSITION"];
-		unsigned int normalAccInd = JSON["meshes"][indMesh]["primitives"][0]["attributes"]["NORMAL"];
-		unsigned int texAccInd = JSON["meshes"][indMesh]["primitives"][0]["attributes"]["TEXCOORD_0"];
-		unsigned int indAccInd = JSON["meshes"][indMesh]["primitives"][0]["indices"];
+		const json& mesh = JSON["meshes"][indMesh];
+		for (const auto& primitive : mesh["primitives"])
+		{
+			unsigned int posAccInd = primitive["attributes"]["POSITION"];
+			unsigned int normalAccInd = primitive["attributes"]["NORMAL"];
+			unsigned int texAccInd = primitive["attributes"]["TEXCOORD_0"];
+			unsigned int indAccInd = primitive["indices"];
+			unsigned int matInd = primitive["material"];
 
-		// Use accessor indices to get all vertices components
-		std::vector<float> posVec = getFloats(JSON["accessors"][posAccInd]);
-		std::vector<glm::vec3> positions = groupFloatsVec3(posVec);
-		std::vector<float> normalVec = getFloats(JSON["accessors"][normalAccInd]);
-		std::vector<glm::vec3> normals = groupFloatsVec3(normalVec);
-		std::vector<float> texVec = getFloats(JSON["accessors"][texAccInd]);
-		std::vector<glm::vec2> texUVs = groupFloatsVec2(texVec);
+			// Use accessor indices to get all vertices components
+			std::vector<float> posVec = getFloats(JSON["accessors"][posAccInd]);
+			std::vector<glm::vec3> positions = groupFloatsVec3(posVec);
+			std::vector<float> normalVec = getFloats(JSON["accessors"][normalAccInd]);
+			std::vector<glm::vec3> normals = groupFloatsVec3(normalVec);
+			std::vector<float> texVec = getFloats(JSON["accessors"][texAccInd]);
+			std::vector<glm::vec2> texUVs = groupFloatsVec2(texVec);
 
-		// Combine all the vertex components and also get the indices and textures
-		std::vector<Vertex> vertices = assembleVertices(positions, normals, texUVs);
-		std::vector<unsigned int> indices = getIndices(JSON["accessors"][indAccInd]);
-		std::vector<std::shared_ptr<Texture>> textures = getTextures();
+			// Combine all the vertex components and also get the indices and textures
+			std::vector<Vertex> vertices = assembleVertices(positions, normals, texUVs);
+			std::vector<unsigned int> indices = getIndices(JSON["accessors"][indAccInd]);
+			
+			// Get Material Information
+			std::vector<std::shared_ptr<Texture>> textures = getTextures();
 
-		// Combine the vertices, indices, and textures into a mesh
-		m_Model->m_Meshes.push_back(std::make_shared<Mesh>(vertices, indices, textures, curTrans));
+
+			// Combine the vertices, indices, and textures into a mesh
+			std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(vertices, indices, textures, curTrans);
+			m_Model->m_Meshes.push_back(mesh);
+		}
 	}
 
 	std::vector<float> glTFLoader::getFloats(json accessor)
@@ -266,8 +275,8 @@ namespace GLCore::Utils {
 			std::string texPath = JSON["images"][i]["uri"];
 
 			// Check if the texture has already been loaded
-			if (m_Model->m_LoadedTextures[texPath] != nullptr)
-				textures.push_back(m_Model->m_LoadedTextures[texPath]);
+			if (m_Model->m_TexturePool[texPath] != nullptr)
+				textures.push_back(m_Model->m_TexturePool[texPath]);
 			else {
 				Texture::TextureType type;
 				if (texPath.find("baseColor") != std::string::npos)
@@ -279,7 +288,7 @@ namespace GLCore::Utils {
 					(fileDirectory + texPath).c_str(), type
 				);
 				textures.push_back(tex_ptr);
-				m_Model->m_LoadedTextures[texPath] = tex_ptr;
+				m_Model->m_TexturePool[texPath] = tex_ptr;
 			}
 		}
 
