@@ -4,13 +4,15 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include "../GLAbstract/Shader.h"
 #include "../GLAbstract/VertexArray.h"
 #include "../GLAbstract/VertexBuffer.h"
 #include "../GLAbstract/VertexBufferLayout.h"
 #include "../GLAbstract/IndexBuffer.h"
 #include "../GLAbstract/Texture.h"
+
+#include "Material.h"
 #include "../Transform.hpp"
+
 
 namespace GLCore::Utils {
 	struct Vertex {
@@ -34,31 +36,40 @@ namespace GLCore::Utils {
 		}
 	};
 
-	class Mesh {
+	class SubMesh {
 	public:
-		// Individual Transform for each mesh
-		Transform* m_Transform;
-
 		std::vector<Vertex>       m_Vertices;
 		std::vector<unsigned int> m_Indices;
-		std::vector<std::shared_ptr<Texture>> m_Textures;
+		std::shared_ptr<Material> m_Material;
 
 		std::unique_ptr<VertexArray>	m_VAO;
 		std::unique_ptr<VertexBuffer>	m_VBO;
 		std::unique_ptr<IndexBuffer>	m_IBO;
 
 	public:
-		Mesh(){}
-		Mesh(
-			std::vector<Vertex> vertices, 
-			std::vector<unsigned int> indices, 
-			std::vector<std::shared_ptr<Texture>> textures,
-			Transform* transform = nullptr
+		SubMesh(
+			std::vector<Vertex> vertices,
+			std::vector<unsigned int> indices,
+			std::shared_ptr<Material> material
 		);
-		~Mesh() {}
+		~SubMesh() {}
 		void Draw(Shader& shader);
 
-	private:
-		void SetupMesh();
+	private:	
+		void SetupSubMesh();
+	};
+
+	class Mesh {
+	public:
+		std::string m_Name;
+		Transform* m_Transform;
+
+		std::vector<std::shared_ptr<SubMesh>> m_SubMeshes;
+
+	public:
+		Mesh(const std::string& name, Transform* transform)
+		: m_Name(name), m_Transform(transform) {}
+		
+		void Draw(Shader& shader);
 	};
 }

@@ -536,6 +536,7 @@
     <ClCompile Include="src\GLCore\Util\GLAbstract\VertexArray.cpp" />
     <ClCompile Include="src\GLCore\Util\GLAbstract\VertexBuffer.cpp" />
     <ClCompile Include="src\GLCore\Util\Model\glTFLoader.cpp" />
+    <ClCompile Include="src\GLCore\Util\Model\Material.cpp" />
     <ClCompile Include="src\GLCore\Util\Model\Mesh.cpp" />
     <ClCompile Include="src\GLCore\Util\Model\Model.cpp" />
     <ClCompile Include="src\GLCore\Util\OpenGLDebug.cpp" />

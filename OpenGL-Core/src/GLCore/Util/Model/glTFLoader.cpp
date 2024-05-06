@@ -23,13 +23,18 @@ namespace GLCore::Utils {
 		JSON = json::parse(text);
 
 		// Get the binary m_Data
-		m_File = file;
+		m_File = std::string(file);
+		m_FileDir = m_File.substr(0, m_File.find_last_of('/') + 1);
+
 		m_Data = getData();
 
 		if(model == nullptr) return;
 		m_Model = model;
 		// Traverse all nodes
-		traverseNode(0, &(m_Model->m_Transform));
+		for (size_t i = 0; i < JSON["nodes"].size(); ++i)
+		{
+			traverseNode(i, &(m_Model->m_Transform));
+		}
 	
 	}
 
@@ -40,9 +45,7 @@ namespace GLCore::Utils {
 		std::string uri = JSON["buffers"][0]["uri"];
 
 		// Store raw text m_Data into bytesText
-		std::string fileStr = std::string(m_File);
-		std::string fileDirectory = fileStr.substr(0, fileStr.find_last_of('/') + 1);
-		bytesText = File::ReadFileAsString((fileDirectory + uri).c_str());
+		bytesText = File::ReadFileAsString((m_FileDir + uri).c_str());
 
 		// Transform the raw text m_Data into bytes and put them in a vector
 		std::vector<unsigned char> m_Data(bytesText.begin(), bytesText.end());
@@ -142,8 +145,23 @@ namespace GLCore::Utils {
 
 	void glTFLoader::loadMesh(unsigned int indMesh, Transform* curTrans)
 	{
-		// Get all accessor indices
 		const json& mesh = JSON["meshes"][indMesh];
+		std::string name = mesh["name"];
+		std::shared_ptr<Mesh> myMesh;
+
+		if (m_Model->m_MeshPool.find(name) != m_Model->m_MeshPool.end()) {
+			// [TODO]: Mesh already loaded not going to render Here might be 
+			// wrong, since node can share same mesh but have different trasnfrom.
+			// I will keep it like this for now.
+			return;
+		}
+		else {
+			myMesh = std::make_shared<Mesh>(name, curTrans);
+			m_Model->m_MeshPool[name] = myMesh;
+			m_Model->m_Meshes.push_back(myMesh);
+		}
+
+		// Loading SubMeshes that belongs to single mesh, normally only one SubMesh
 		for (const auto& primitive : mesh["primitives"])
 		{
 			unsigned int posAccInd = primitive["attributes"]["POSITION"];
@@ -164,13 +182,15 @@ namespace GLCore::Utils {
 			std::vector<Vertex> vertices = assembleVertices(positions, normals, texUVs);
 			std::vector<unsigned int> indices = getIndices(JSON["accessors"][indAccInd]);
 			
-			// Get Material Information
-			std::vector<std::shared_ptr<Texture>> textures = getTextures();
-
+			// [TODO]: Currently just get all textures from tex folder and use the 
+			// default PhongMaterial, This will be changed in the future.
+			//std::vector<std::shared_ptr<Texture>> textures = getTextures();
+			//std::shared_ptr<PhongMaterial> material = std::make_shared<PhongMaterial>(textures);
+			std::shared_ptr<Material> material = getMaterial(matInd);
 
 			// Combine the vertices, indices, and textures into a mesh
-			std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(vertices, indices, textures, curTrans);
-			m_Model->m_Meshes.push_back(mesh);
+			std::shared_ptr<SubMesh> subMesh = std::make_shared<SubMesh>(vertices, indices, material);
+			myMesh->m_SubMeshes.push_back(subMesh);
 		}
 	}
 
@@ -260,39 +280,96 @@ namespace GLCore::Utils {
 		return indices;
 	}
 
-	std::vector<std::shared_ptr<Texture>> glTFLoader::getTextures()
+	std::shared_ptr<Texture> glTFLoader::getTextures(unsigned int indTex)
 	{
-		std::vector<std::shared_ptr<Texture>> textures;
-
-		// Extract GLTF's located Directory
-		std::string fileStr = std::string(m_File);
-		std::string fileDirectory = fileStr.substr(0, fileStr.find_last_of('/') + 1);
-
 		// Go over all images
-		for (unsigned int i = 0; i < JSON["images"].size(); i++)
-		{
-			// uri of current texture
-			std::string texPath = JSON["images"][i]["uri"];
+		if(indTex >= JSON["images"].size())
+			throw std::invalid_argument("Texture index out of range");
 
-			// Check if the texture has already been loaded
-			if (m_Model->m_TexturePool[texPath] != nullptr)
-				textures.push_back(m_Model->m_TexturePool[texPath]);
-			else {
-				Texture::TextureType type;
-				if (texPath.find("baseColor") != std::string::npos)
-					type = Texture::TextureType::DIFFUSE;
-				else if (texPath.find("metallicRoughness") != std::string::npos)
-					type = Texture::TextureType::SPECULAR;
+		std::string texPath = JSON["images"][indTex]["uri"];
+		if (m_Model->m_TexturePool[texPath] != nullptr)
+			return m_Model->m_TexturePool[texPath];
+		
+		else {
+			Texture::TextureType type;
+			if (texPath.find("baseColor") != std::string::npos)
+				type = Texture::TextureType::DIFFUSE;
+			else if (texPath.find("metallicRoughness") != std::string::npos)
+				type = Texture::TextureType::SPECULAR;
 
-				std::shared_ptr<Texture> tex_ptr = std::make_shared<Texture>(
-					(fileDirectory + texPath).c_str(), type
-				);
-				textures.push_back(tex_ptr);
-				m_Model->m_TexturePool[texPath] = tex_ptr;
+			std::shared_ptr<Texture> tex_ptr = std::make_shared<Texture>(
+				(m_FileDir + texPath).c_str(), type
+			);
+			m_Model->m_TexturePool[texPath] = tex_ptr;
+
+			return tex_ptr;
+		}
+	}
+
+	std::shared_ptr<Material> glTFLoader::getMaterial(unsigned int indMat)
+	{
+		// Get the material
+		json material = JSON["materials"][indMat];
+
+		// Currently only supports PBR materials
+		if(material.find("pbrMetallicRoughness") == material.end())
+			throw std::invalid_argument("Material is not PBR");
+
+		if(m_Model->m_MaterialPool.find(material["name"]) != m_Model->m_MaterialPool.end())
+			return m_Model->m_MaterialPool[material["name"]];
+
+		// Load the PBR material
+		bool doubleSided = material.value("doubleSided", false);
+		glm::vec3 emissiveFactor(0.0f);
+		if (material.contains("emissiveFactor")) {
+			auto emissiveArray = material["emissiveFactor"];
+			if (emissiveArray.is_array() && emissiveArray.size() == 3) {
+				emissiveFactor = glm::vec3(emissiveArray[0], emissiveArray[1], emissiveArray[2]);
 			}
 		}
+		json pbr = material["pbrMetallicRoughness"];
+		// Load base color factor
+		glm::vec4 baseColorFactor(1.0f);
+		if (pbr.contains("baseColorFactor")) {
+			auto baseColorFactorArray = pbr["baseColorFactor"];
+			baseColorFactor = glm::vec4(
+				baseColorFactorArray[0], 
+				baseColorFactorArray[1], 
+				baseColorFactorArray[2], 
+				baseColorFactorArray[3]
+			);
+		}
 
-		return textures;
+		// Load base color texture index and texCoord
+		std::shared_ptr<Texture> baseColorTexture = nullptr;
+		if (pbr.contains("baseColorTexture")) {
+			auto jbaseColorTexture = pbr["baseColorTexture"];
+			int baseColorTextureIndex = jbaseColorTexture["index"];
+			// not sure what this is for
+			int baseColorTexCoord = jbaseColorTexture["texCoord"];
+
+			// Get the texture
+			baseColorTexture = getTextures(baseColorTextureIndex);
+		}
+
+		// Load metallic factor
+		float metallicFactor = pbr.value("metallicFactor", 0.0f);
+
+		// Load roughness factor
+		float roughnessFactor = pbr.value("roughnessFactor", 1.0f);
+
+		// Create and return the PBR material
+		std::shared_ptr<PBRMaterial> pbrMaterial = std::make_shared<PBRMaterial>(
+			emissiveFactor, 
+			material["name"], 
+			doubleSided, 
+			baseColorFactor, 
+			baseColorTexture,
+			metallicFactor, 
+			roughnessFactor
+		);
+		m_Model->m_MaterialPool[material["name"]] = pbrMaterial;
+		return pbrMaterial;
 	}
 	
 	

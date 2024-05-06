@@ -16,24 +16,26 @@ namespace GLCore::Utils {
         glTFLoader(const char* file, Model* model);
     private:
         // path + name of GLTF file
-        const char* m_File = nullptr;
-        Model* m_Model = nullptr;
-        
-        Mesh* currMesh = nullptr;
-        Texture* currTexture = nullptr;
+        std::string m_File;
+        std::string m_FileDir;
 
+        // Data from the file
         std::vector<unsigned char> m_Data;
         json JSON;
+
+        // Model to be loaded into
+        Model* m_Model = nullptr;
 
     private:
         std::vector<unsigned char> getData();
         void traverseNode(unsigned int nextNode, Transform* prevTrans);
         void loadMesh(unsigned int indMesh, Transform* curTrans);
 
-
         std::vector<float> getFloats(json accessor);
         std::vector<unsigned int> getIndices(json accessor);
-        std::vector<std::shared_ptr<Texture>> getTextures();
+
+        std::shared_ptr<Texture> getTextures(unsigned int indTex);
+        std::shared_ptr<Material> getMaterial(unsigned int indMat);
         std::vector<Vertex> assembleVertices
         (
             std::vector<glm::vec3> positions,

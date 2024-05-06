@@ -5,22 +5,20 @@
 #include "../GLAbstract/Renderer.h"
 
 namespace GLCore::Utils {
-	Mesh::Mesh(
+	SubMesh::SubMesh(
 		std::vector<Vertex> vertices,
 		std::vector<unsigned int> indices,
-		std::vector<std::shared_ptr<Texture>> textures,
-		Transform* transform
+		std::shared_ptr<Material> material
 	)
 	{
 		m_Vertices = vertices;
 		m_Indices = indices;
-		m_Textures = textures;
-		m_Transform = transform;
+		m_Material = material;
 
-		SetupMesh();
+		SetupSubMesh();
 	}
 
-	void Mesh::SetupMesh()
+	void SubMesh::SetupSubMesh()
 	{
 		m_VAO = std::make_unique<VertexArray>();
 		m_VBO = std::make_unique<VertexBuffer>(&m_Vertices[0], m_Vertices.size() * sizeof(Vertex));
@@ -29,45 +27,27 @@ namespace GLCore::Utils {
 		m_IBO = std::make_unique<IndexBuffer>(&m_Indices[0], m_Indices.size());
 	}
 
-	void Mesh::Draw(Shader& shader)
+	void SubMesh::Draw(Shader& shader)
 	{
-		unsigned int diffuseNr = 1;
-		unsigned int specularNr = 1;
-		unsigned int normalNr = 1;
-		unsigned int heightNr = 1;
-
-		shader.Bind();
-		shader.SetUniformMat4f("model", m_Transform->GetModelMatrix());
-		for (unsigned int i = 0; i < m_Textures.size(); i++)
-		{
-			m_Textures[i]->Bind(i);
-
-			std::string name;
-
-			// name here should be match what defined in shader
-			switch(m_Textures[i]->m_Type){
-				case Texture::TextureType::DIFFUSE:
-					name = "texture_diffuse" + std::to_string(diffuseNr++);
-					break;
-				case Texture::TextureType::SPECULAR:
-					name = "texture_specular" + std::to_string(specularNr++);
-					break;
-				case Texture::TextureType::NORMAL:
-					name = "texture_normal" + std::to_string(normalNr++);
-					break;
-				case Texture::TextureType::HEIGHT:
-					name = "texture_height" + std::to_string(heightNr++);
-					break;
-			}
-			
-			shader.SetUniform1i(name.c_str(), i);
-		}
+		m_Material->Draw(shader);
 
 		// draw mesh
 		Renderer::Draw(*m_VAO, *m_IBO, shader);
 
-		shader.Unbind();
 		m_IBO->Unbind();
 		m_VAO->Unbind();
+	}
+
+	void Mesh::Draw(Shader& shader)
+	{
+		shader.Bind();
+		shader.SetUniformMat4f("model", m_Transform->GetModelMatrix());
+		
+		for (auto& subMesh : m_SubMeshes)
+		{
+			subMesh->Draw(shader);
+		}
+
+		shader.Unbind();
 	}
 }

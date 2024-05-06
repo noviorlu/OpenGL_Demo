@@ -36,9 +36,9 @@ void MatTest::OnAttach()
 	m_Model = new Model(
 		glm::vec3(0.0, -2.0, 0.0),
 		glm::vec3(180.0, 0.0, 0.0),
-		glm::vec3(2, 2, 2)
+		glm::vec3(-2, 2, 2)
 	);
-	{ glTFLoader ldr = glTFLoader("assets/models/mutiMatCube/multiMeshCube.gltf", m_Model); }
+	{ glTFLoader ldr = glTFLoader("assets/models/mary/mary.gltf", m_Model); }
 }
 
 void MatTest::OnDetach()
