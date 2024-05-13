@@ -126,6 +126,7 @@
   <ItemGroup>
     <None Include="assets\shaders\model_loading_frag.glsl" />
     <None Include="assets\shaders\model_loading_vert.glsl" />
+    <None Include="assets\shaders\pbr_frag.glsl" />
     <None Include="assets\shaders\test.frag.glsl" />
     <None Include="assets\shaders\test.vert.glsl" />
     <None Include="assets\shaders\test_Batch_frag.glsl" />

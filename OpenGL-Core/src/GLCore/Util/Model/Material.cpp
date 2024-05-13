@@ -73,7 +73,10 @@ namespace GLCore::Utils {
 		m_DoubleSided(doubleSided) 
 	{
 		m_PBRMetallicRoughness.baseColorFactor = baseColorFactor;
-		m_PBRMetallicRoughness.baseColorTexture = baseColorTexture;
+		if (baseColorTexture) {
+			m_PBRMetallicRoughness.baseColorTexture = baseColorTexture;
+			m_PBRMetallicRoughness.baseColorFactor = glm::vec4(-1.0f);
+		}
 		m_PBRMetallicRoughness.metallicFactor = metallicFactor;
 		m_PBRMetallicRoughness.roughnessFactor = roughnessFactor;
 	}
@@ -85,8 +88,12 @@ namespace GLCore::Utils {
 		shader.SetUniform1f("material.metallicFactor", m_PBRMetallicRoughness.metallicFactor);
 		shader.SetUniform1f("material.roughnessFactor", m_PBRMetallicRoughness.roughnessFactor);
 
-		if (m_PBRMetallicRoughness.baseColorTexture)
-			m_PBRMetallicRoughness.baseColorTexture->Bind(1);
+		// bind base color texture, 1 is the texture unit
+		// name here should be match what defined in shader
+		if (m_PBRMetallicRoughness.baseColorTexture) {
+			shader.SetUniform1i("material.baseColorTexture", 0);
+			m_PBRMetallicRoughness.baseColorTexture->Bind(0);
+		}
 	}
 
 	void PBRMaterial::OnImGuiRender()

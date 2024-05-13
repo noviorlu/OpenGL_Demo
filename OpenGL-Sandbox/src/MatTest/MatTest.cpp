@@ -30,11 +30,11 @@ void MatTest::OnAttach()
 
 	m_Shader = Shader::FromGLSLTextFiles(
 		"assets/shaders/model_loading_vert.glsl",
-		"assets/shaders/model_loading_frag.glsl"
+		"assets/shaders/pbr_frag.glsl"
 	);
 
 	m_Model = new Model(
-		glm::vec3(0.0, -2.0, 0.0),
+		glm::vec3(0.0, -3.0, 0.0),
 		glm::vec3(180.0, 0.0, 0.0),
 		glm::vec3(-2, 2, 2)
 	);
