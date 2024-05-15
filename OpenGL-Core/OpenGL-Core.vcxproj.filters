@@ -1275,6 +1275,7 @@
     <ClInclude Include="src\GLCore\Util\Common\File.hpp" />
     <ClInclude Include="src\GLCore\Util\Light\Light.h" />
     <ClInclude Include="src\GLCore\Util\Model\Material.h" />
+    <ClInclude Include="src\GLCore\Util\Common\MonoSingleton.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GLCore\Core\Application.cpp">
