@@ -30,9 +30,6 @@ namespace GLCore::Utils {
 
 	private:
 		float m_MouseSensitivity = 0.1f;
-		float m_CameraTranslationSpeed = 5.0f;
-		float m_CameraRotationSpeed = 180.0f;
-		
 
 		bool m_LeftMousePressed = false;
 		bool RightMousePressed = false;

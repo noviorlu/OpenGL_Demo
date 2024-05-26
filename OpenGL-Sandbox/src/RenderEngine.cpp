@@ -6,6 +6,7 @@
 #include "CubeTest/CubeTest.h"
 #include "ModelTest/ModelTest.h"
 #include "MatTest/MatTest.h"
+#include "DepthTest/DepthTest.h"
 
 using namespace GLCore;
 
@@ -22,9 +23,10 @@ public:
 		testMenu->RegisterTest<CubeTest>("Test cube3D");
 		testMenu->RegisterTest<ModelTest>("Test Model");
 		testMenu->RegisterTest<MatTest>("Test Material");
+		testMenu->RegisterTest<DepthTest>("Test Depth");
 		PushLayer(testMenu);
 
-		testMenu->Preset("Test Material");
+		testMenu->Preset("Test Depth");
 	}
 };
 

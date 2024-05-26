@@ -41,7 +41,7 @@ namespace GLCore::Utils {
 		}
 
 		ImGui::Text("Camera Control");
-		ImGui::SliderFloat("Translation Speed", &m_CameraTranslationSpeed, 0.1f, 10.0f);
+		ImGui::SliderFloat("Translation Speed", &m_CameraTranslationSpeed, 0.1f, 100.0f);
 		ImGui::SliderFloat("Rotation Speed", &m_CameraRotationSpeed, 0.1f, 10.0f);
 
 		if(ImGui::Checkbox("isFreelook? Or Orbit", &isFreelook)) {

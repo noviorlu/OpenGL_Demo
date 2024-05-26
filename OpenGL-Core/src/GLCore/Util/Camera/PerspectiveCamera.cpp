@@ -50,7 +50,7 @@ namespace GLCore::Utils {
 			RecalculateProjectionMatrix();
 		if(ImGui::SliderFloat("Near Plane n", &m_Near, 0.01f, 100.0f))
 			RecalculateProjectionMatrix();
-		if(ImGui::SliderFloat("Far Plane f", &m_Far, 0.01f, 100.0f))
+		if(ImGui::SliderFloat("Far Plane f", &m_Far, 1.0f, 1000.0f))
 			RecalculateProjectionMatrix();
 	}
 }

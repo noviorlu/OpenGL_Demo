@@ -149,6 +149,9 @@ namespace GLCore::Utils {
 		std::string name = mesh["name"];
 		std::shared_ptr<Mesh> myMesh;
 
+		// print out the mesh name
+		std::cout << "Load Mesh: " << name << std::endl;
+
 		if (m_Model->m_MeshPool.find(name) != m_Model->m_MeshPool.end()) {
 			// [TODO]: Mesh already loaded not going to render Here might be 
 			// wrong, since node can share same mesh but have different trasnfrom.
@@ -282,9 +285,10 @@ namespace GLCore::Utils {
 
 	std::shared_ptr<Texture> glTFLoader::getTextures(unsigned int indTex)
 	{
-		// Go over all images
-		if(indTex >= JSON["images"].size())
-			throw std::invalid_argument("Texture index out of range");
+		if (indTex >= JSON["images"].size()) {
+			std::cout << "Texture index out of range" << std::endl;
+			assert(false);
+		}
 
 		std::string texPath = JSON["images"][indTex]["uri"];
 		if (m_Model->m_TexturePool[texPath] != nullptr)
@@ -346,7 +350,7 @@ namespace GLCore::Utils {
 			auto jbaseColorTexture = pbr["baseColorTexture"];
 			int baseColorTextureIndex = jbaseColorTexture["index"];
 			// not sure what this is for
-			int baseColorTexCoord = jbaseColorTexture["texCoord"];
+			// int baseColorTexCoord = jbaseColorTexture["texCoord"];
 
 			// Get the texture
 			baseColorTexture = getTextures(baseColorTextureIndex);
