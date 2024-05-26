@@ -7,6 +7,7 @@
 #include "ModelTest/ModelTest.h"
 #include "MatTest/MatTest.h"
 #include "DepthTest/DepthTest.h"
+#include "StencilTest/StencilTest.h"
 
 using namespace GLCore;
 
@@ -24,9 +25,10 @@ public:
 		testMenu->RegisterTest<ModelTest>("Test Model");
 		testMenu->RegisterTest<MatTest>("Test Material");
 		testMenu->RegisterTest<DepthTest>("Test Depth");
+		testMenu->RegisterTest<StencilTest>("Test Stencil");
 		PushLayer(testMenu);
 
-		testMenu->Preset("Test Depth");
+		testMenu->Preset("Test Stencil");
 	}
 };
 
