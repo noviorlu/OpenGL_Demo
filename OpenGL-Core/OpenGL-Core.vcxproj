@@ -128,6 +128,7 @@
     <ClInclude Include="src\GLCore\Util\Camera\PerspectiveCameraController.h" />
     <ClInclude Include="src\GLCore\Util\Common\File.hpp" />
     <ClInclude Include="src\GLCore\Util\Common\MonoSingleton.hpp" />
+    <ClInclude Include="src\GLCore\Util\GLAbstract\PostProcess.h" />
     <ClInclude Include="src\GLCore\Util\GLAbstract\IndexBuffer.h" />
     <ClInclude Include="src\GLCore\Util\GLAbstract\Renderer.h" />
     <ClInclude Include="src\GLCore\Util\GLAbstract\Shader.h" />

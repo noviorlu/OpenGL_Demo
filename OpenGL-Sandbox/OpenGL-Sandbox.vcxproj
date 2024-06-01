@@ -133,6 +133,8 @@
     <None Include="assets\shaders\model_loading_vert.glsl" />
     <None Include="assets\shaders\outline_frag.glsl" />
     <None Include="assets\shaders\pbr_frag.glsl" />
+    <None Include="assets\shaders\postproc_frag.glsl" />
+    <None Include="assets\shaders\postproc_vert.glsl" />
     <None Include="assets\shaders\test.frag.glsl" />
     <None Include="assets\shaders\test.vert.glsl" />
     <None Include="assets\shaders\test_Batch_frag.glsl" />

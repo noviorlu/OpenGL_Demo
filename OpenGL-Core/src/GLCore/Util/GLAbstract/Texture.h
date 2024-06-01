@@ -18,6 +18,8 @@ namespace GLCore::Utils {
 		std::string m_FilePath;
 		unsigned int m_RendererID;
 	public:
+		Texture();
+		Texture(float width, float height);
 		Texture(const std::string& path);
 		Texture(const std::string& path, TextureType type);
 		~Texture();

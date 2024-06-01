@@ -44,6 +44,9 @@ void StencilTest::OnAttach()
 
 void StencilTest::OnDetach()
 {
+	glStencilMask(0xFF);
+	Renderer::Clear();
+	glStencilMask(0x00); // disable writing to the stencil buffer
 }
 
 void StencilTest::OnEvent(Event& event){
@@ -58,7 +61,7 @@ void StencilTest::OnUpdate(Timestep ts)
 	glEnable(GL_DEPTH_TEST);
 	glStencilMask(0xFF);
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	Renderer::Clear();
 
 	m_Shader->Bind();
 	m_Shader->SetUniformMat4f("ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
@@ -67,7 +70,6 @@ void StencilTest::OnUpdate(Timestep ts)
 
 	// Setup Stencil Buffer Write rule
 	glStencilFunc(GL_ALWAYS, 1, 0xFF); // all fragments should pass the stencil test
-	glStencilMask(0xFF); // enable writing to the stencil buffer
 	
 	m_Model->Draw(*m_Shader);
 	
