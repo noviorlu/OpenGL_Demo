@@ -8,6 +8,7 @@
 #include "MatTest/MatTest.h"
 #include "DepthTest/DepthTest.h"
 #include "StencilTest/StencilTest.h"
+#include "PostProcessTest/PostProcessTest.h"
 
 using namespace GLCore;
 
@@ -26,9 +27,11 @@ public:
 		testMenu->RegisterTest<MatTest>("Test Material");
 		testMenu->RegisterTest<DepthTest>("Test Depth");
 		testMenu->RegisterTest<StencilTest>("Test Stencil");
+		testMenu->RegisterTest<PostProcessTest>("Test PostProcess");
+
 		PushLayer(testMenu);
 
-		testMenu->Preset("Test Stencil");
+		testMenu->Preset("Test PostProcess");
 	}
 };
 

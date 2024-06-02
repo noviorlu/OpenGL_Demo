@@ -106,6 +106,7 @@
     <ClInclude Include="src\DepthTest\DepthTest.h" />
     <ClInclude Include="src\MatTest\MatTest.h" />
     <ClInclude Include="src\ModelTest\ModelTest.h" />
+    <ClInclude Include="src\PostProcessTest\PostProcessTest.h" />
     <ClInclude Include="src\StencilTest\StencilTest.h" />
     <ClInclude Include="src\TestMenu\TestMenu.h" />
     <ClInclude Include="src\TextureTest\Texture2DTest.h" />
@@ -117,6 +118,7 @@
     <ClCompile Include="src\DepthTest\DepthTest.cpp" />
     <ClCompile Include="src\MatTest\MatTest.cpp" />
     <ClCompile Include="src\ModelTest\ModelTest.cpp" />
+    <ClCompile Include="src\PostProcessTest\PostProcessTest.cpp" />
     <ClCompile Include="src\RenderEngine.cpp" />
     <ClCompile Include="src\StencilTest\StencilTest.cpp" />
     <ClCompile Include="src\TestMenu\TestMenu.cpp" />
