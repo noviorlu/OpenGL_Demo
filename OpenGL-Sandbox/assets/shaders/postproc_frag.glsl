@@ -4,6 +4,7 @@ in vec2 v_TexCoord; // varing TextCoord
 
 uniform sampler2D u_ScreenTexture;
 
+// Strictly this should be calculated using the screen resolution
 const float offset = 1.0 / 300;
 
 void main()
@@ -27,16 +28,16 @@ void main()
         vec2(0.0f, -offset), // bottom-center
         vec2(offset, -offset)  // bottom-right
     );
-    /*float kernel[9] = float[](
+    float kernel[9] = float[](
         0, -1, 0,
         -1, 5, -1,
         0, -1, 0
-    ); */
-    float kernel[9] = float[](
+    );
+    /*float kernel[9] = float[](
         0.11111111, 0.11111111, 0.11111111,
         0.11111111, 0.11111111, 0.11111111,
         0.11111111, 0.11111111, 0.11111111
-    );
+    ); */
     vec3 sampleTex[9];
     for (int i = 0; i < 9; i++)
     {

@@ -4,6 +4,11 @@
 #include <stb_image.h>
 
 namespace GLCore::Utils {
+	/// <summary>
+	/// Generate Empty Texture with specific width and height
+	/// </summary>
+	/// <param name="width"></param>
+	/// <param name="height"></param>
 	Texture::Texture(float width, float height)
 	{
 		glGenTextures(1, &m_RendererID);
@@ -16,6 +21,10 @@ namespace GLCore::Utils {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	}
 
+	/// <summary>
+	/// Generate Texture from file path
+	/// </summary>
+	/// <param name="path"></param>
 	Texture::Texture(const std::string& path)
 		: m_RendererID(0), m_FilePath(path), m_LocalBuffer(nullptr), m_Width(0), m_Height(0), m_BPP(0)
 	{

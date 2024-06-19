@@ -27,7 +27,7 @@ namespace GLCore::Utils {
 			m_TextureColor = new Texture(m_Width, m_Height);
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_TextureColor->m_RendererID, 0);
 		
-			// configure depth and stencil renderbuffer
+			// create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
 			glGenRenderbuffers(1, &m_rbo);
 			glBindRenderbuffer(GL_RENDERBUFFER, m_rbo);
 			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_Width, m_Height);
@@ -46,6 +46,7 @@ namespace GLCore::Utils {
 			delete m_TextureColor;
 		}
 		void FowardPass() {
+			// render the scene and store the color in framebuffer
 			glBindFramebuffer(GL_FRAMEBUFFER, m_fbo);
 			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -53,6 +54,7 @@ namespace GLCore::Utils {
 		}
 
 		void BackwardPass() {
+			// render the quad with framebuffer color texture
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
