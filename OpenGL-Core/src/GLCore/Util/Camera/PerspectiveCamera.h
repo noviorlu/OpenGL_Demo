@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
-
+#include "GLCore/Util/GLAbstract/Shader.h"
 #include "Camera.h"
 namespace GLCore::Utils {
 
@@ -27,7 +27,7 @@ namespace GLCore::Utils {
 
 		void OffsetFov(float offset);
 		void OnWindowResized(uint32_t width, uint32_t height) override;
-		
+		void Draw(Shader& shader) override;
 	protected:
 		void RecalculateProjectionMatrix() override;
 		void OnImGuiRender() override;

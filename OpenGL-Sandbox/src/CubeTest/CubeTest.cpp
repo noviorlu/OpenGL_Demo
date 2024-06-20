@@ -118,7 +118,7 @@ void CubeTest::OnUpdate(Timestep ts)
 	m_Texture->Bind(0);
 	m_Shader->Bind();
 
-	m_Shader->SetUniformMat4f("ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
+	m_Shader->SetUniformMat4f("u_ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
 
 	for (unsigned int i = 1; i < 10; i++)
 	{

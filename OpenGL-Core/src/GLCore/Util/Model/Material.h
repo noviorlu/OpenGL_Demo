@@ -17,27 +17,33 @@ namespace GLCore::Utils {
 		virtual void Draw(Shader& shader) = 0;
 	};
 
-	class PhongMaterial : public Material {
+	class BlinnPhongMaterial : public Material {
 	public:
 		static constexpr glm::vec3 DEFAULT_AMBIENT = glm::vec3(0.2f);
 		static constexpr glm::vec3 DEFAULT_DIFFUSE = glm::vec3(0.8f);
 		static constexpr glm::vec3 DEFAULT_SPECULAR = glm::vec3(1.0f);
 		static constexpr float DEFAULT_SHININESS = 32.0f;
 
-		glm::vec3 m_Ambient;
-		glm::vec3 m_Diffuse;
-		glm::vec3 m_Specular;
-		float m_Shininess;
+		glm::vec3 m_Ambient; // ka
+		glm::vec3 m_Diffuse; // kd
+		glm::vec3 m_Specular; // ks
+		float m_Shininess; // p
+
+		glm::vec4 m_BaseColor;
+		std::shared_ptr<Texture> m_BaseColorTexture;
 
 	public:
-		PhongMaterial(
+		BlinnPhongMaterial(
 			const glm::vec3& ambient = DEFAULT_AMBIENT,
 			const glm::vec3& diffuse = DEFAULT_DIFFUSE,
 			const glm::vec3& specular = DEFAULT_SPECULAR,
 			float shininess = DEFAULT_SHININESS);
 	
+		BlinnPhongMaterial(std::shared_ptr<Material> mat);
 		void Draw(Shader& shader) override;
 		void OnImGuiRender() override;
+
+
 	};
 
 	class PBRMaterial : public Material {

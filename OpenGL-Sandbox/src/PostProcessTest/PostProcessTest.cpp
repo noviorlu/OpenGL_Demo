@@ -79,7 +79,8 @@ void PostProcessTest::OnUpdate(Timestep ts)
 
 	m_PostProcess.FowardPass();
 	m_Shader->Bind();
-	m_Shader->SetUniformMat4f("ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
+	m_CameraController.GetCamera()->Draw(*m_Shader);
+	//m_Shader->SetUniformMat4f("u_ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
 	m_Model->Draw(*m_Shader);
 
 	m_PostProcess.BackwardPass();

@@ -1276,8 +1276,8 @@
     <ClInclude Include="src\GLCore\Util\Light\Light.h" />
     <ClInclude Include="src\GLCore\Util\Model\Material.h" />
     <ClInclude Include="src\GLCore\Util\Common\MonoSingleton.hpp" />
-    <ClInclude Include="src\GLCore\Util\GLAbstract\RenderBuffer.h" />
-    <ClInclude Include="src\GLCore\Util\GLAbstract\FrameBuffer.h" />
+    <ClInclude Include="src\GLCore\Util\GLAbstract\PostProcess.h" />
+    <ClInclude Include="src\GLCore\Util\Light\LightGroup.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GLCore\Core\Application.cpp">
@@ -1351,7 +1351,5 @@
     <ClCompile Include="src\GLCore\Util\Model\Model.cpp" />
     <ClCompile Include="src\GLCore\Util\Model\glTFLoader.cpp" />
     <ClCompile Include="src\GLCore\Util\Model\Material.cpp" />
-    <ClCompile Include="src\GLCore\Util\GLAbstract\RenderBuffer.cpp" />
-    <ClCompile Include="src\GLCore\Util\GLAbstract\FrameBuffer.cpp" />
   </ItemGroup>
 </Project>

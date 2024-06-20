@@ -101,6 +101,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\BatchRenderTest\BatchRenderTest.h" />
+    <ClInclude Include="src\BlinnPhongTest\BlinnPhongTest.h" />
     <ClInclude Include="src\ClearColorTest\ClearColorTest.h" />
     <ClInclude Include="src\CubeTest\CubeTest.h" />
     <ClInclude Include="src\DepthTest\DepthTest.h" />
@@ -113,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BatchRenderTest\BatchRenderTest.cpp" />
+    <ClCompile Include="src\BlinnPhongTest\BlinnPhongTest.cpp" />
     <ClCompile Include="src\ClearColorTest\ClearColorTest.cpp" />
     <ClCompile Include="src\CubeTest\CubeTest.cpp" />
     <ClCompile Include="src\DepthTest\DepthTest.cpp" />
@@ -130,6 +132,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\shaders\blinnphong_frag.glsl" />
+    <None Include="assets\shaders\blinnphong_vert.glsl" />
     <None Include="assets\shaders\depth_frag.glsl" />
     <None Include="assets\shaders\model_loading_frag.glsl" />
     <None Include="assets\shaders\model_loading_vert.glsl" />

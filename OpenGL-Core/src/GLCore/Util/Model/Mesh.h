@@ -52,10 +52,14 @@ namespace GLCore::Utils {
 			std::vector<unsigned int> indices,
 			std::shared_ptr<Material> material
 		);
-		~SubMesh() {}
+		~SubMesh() {
+			m_VAO->Unbind();
+			m_VBO->Unbind();
+			m_IBO->Unbind();
+		}
 		void Draw(Shader& shader);
 
-	private:	
+	private:
 		void SetupSubMesh();
 	};
 
@@ -67,9 +71,49 @@ namespace GLCore::Utils {
 		std::vector<std::shared_ptr<SubMesh>> m_SubMeshes;
 
 	public:
+		Mesh() {}
 		Mesh(const std::string& name, Transform* transform)
 		: m_Name(name), m_Transform(transform) {}
-		
+		~Mesh() {
+			m_SubMeshes.clear();
+		}
 		void Draw(Shader& shader);
+	};
+
+	class Quad {
+	public:
+		// Cube vertices
+		float rectangleVertices[24] =
+		{
+			// positions   // texture Coords
+			-1.0f, -1.0f,  0.0f, 0.0f,
+			-1.0f,  1.0f,  0.0f, 1.0f,
+			 1.0f,  1.0f,  1.0f, 1.0f,
+
+			-1.0f, -1.0f,  0.0f, 0.0f,
+			 1.0f,  1.0f,  1.0f, 1.0f,
+			 1.0f, -1.0f,  1.0f, 0.0f
+		};
+
+		Quad() {
+			m_VertexArray = new VertexArray();
+			m_VertexBuffer = new VertexBuffer(rectangleVertices, sizeof(rectangleVertices));
+
+			VertexBufferLayout layout;
+			layout.Push<float>(2);
+			layout.Push<float>(2);
+
+			m_VertexArray->AddBuffer(*m_VertexBuffer, layout);
+		}
+
+		void Draw(Shader& shader) {
+			m_VertexArray->Bind();
+			m_VertexBuffer->Bind();
+
+			glDrawArrays(GL_TRIANGLES, 0, m_VertexBuffer->GetCount() / m_VertexArray->GetVertexSize());
+		}
+	private:
+		VertexArray* m_VertexArray;
+		VertexBuffer* m_VertexBuffer;
 	};
 }

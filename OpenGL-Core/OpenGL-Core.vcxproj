@@ -138,6 +138,7 @@
     <ClInclude Include="src\GLCore\Util\GLAbstract\VertexBufferLayout.h" />
     <ClInclude Include="src\GLCoreUtils.h" />
     <ClInclude Include="src\GLCore\Util\Light\Light.h" />
+    <ClInclude Include="src\GLCore\Util\Light\LightGroup.h" />
     <ClInclude Include="src\GLCore\Util\Model\Material.h" />
     <ClInclude Include="src\GLCore\Util\Model\Mesh.h" />
     <ClInclude Include="src\GLCore\Util\Model\Model.h" />

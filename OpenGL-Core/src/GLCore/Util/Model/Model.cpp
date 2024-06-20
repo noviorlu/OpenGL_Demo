@@ -35,14 +35,36 @@ namespace GLCore::Utils {
             rot.y += m_RotationSpeed;
             m_Transform.SetRotation(rot);
 		}
+
+        // Materials
+        if (ImGui::CollapsingHeader("Materials"))
+        {
+            for (auto& mat : m_MaterialPool)
+            {
+				ImGui::PushID(mat.first.c_str());
+                if (ImGui::CollapsingHeader(mat.first.c_str()))
+                {
+					mat.second->OnImGuiRender();
+				}
+				ImGui::PopID();
+			}
+		}
+
         ImGui::End();
     }
 
     void Model::Draw(Shader& shader)
 	{
-        shader.Bind();
         for (unsigned int i = 0; i < m_Meshes.size(); i++)
             m_Meshes[i]->Draw(shader);
-        shader.Unbind();
 	}
+    void Model::ConvertToBlinnPhongMaterial()
+    {
+        for (auto& mat : m_MaterialPool) {
+            auto pbrMat = std::dynamic_pointer_cast<PBRMaterial>(mat.second);
+            if (pbrMat != nullptr) {
+				m_MaterialPool[mat.first] = std::make_shared<BlinnPhongMaterial>(pbrMat);
+			}
+        }
+    }
 }

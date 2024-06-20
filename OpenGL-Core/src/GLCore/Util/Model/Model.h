@@ -31,9 +31,16 @@ namespace GLCore::Utils {
 	public:
 		Model() {}
 		Model(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale);
-		~Model() {}
+		~Model() {
+			m_Meshes.clear();
+			m_MeshPool.clear();
+			m_MaterialPool.clear();
+			m_TexturePool.clear();
+		}
 		
 		void OnImGuiRender();
 		void Draw(Shader& shader);
+
+		void ConvertToBlinnPhongMaterial();
 	};
 }

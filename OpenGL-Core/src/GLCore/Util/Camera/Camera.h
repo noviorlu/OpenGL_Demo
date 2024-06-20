@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 
 #include "GLCore/Core/Application.h"
+#include "../GLAbstract/Shader.h"
 
 namespace GLCore::Utils {
 
@@ -43,7 +44,8 @@ namespace GLCore::Utils {
 		/* Camera Public Functions */
 		virtual void OnWindowResized(uint32_t width, uint32_t height);
 		virtual void OnImGuiRender();
-		
+		virtual void Draw(Shader& shader){}
+
 		void UpdateViewMatrix(const glm::vec3& position, const glm::vec3& Front);
 		void UpdateViewMatrix_T(const glm::vec3& camPos, const glm::vec3& lookAt);
 		

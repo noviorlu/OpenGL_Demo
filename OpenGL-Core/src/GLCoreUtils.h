@@ -17,6 +17,9 @@
 #include "GLCore/Util/Model/Model.h"
 #include "GLCore/Util/Model/glTFLoader.h"
 
+#include "GLCore/Util/Light/LightGroup.h"
+#include "GLCore/Util/Light/Light.h"
+
 #include "GLCore/Util/GLAbstract/PostProcess.h"
 
 #include "GLCore/Util/OpenGLDebug.h"

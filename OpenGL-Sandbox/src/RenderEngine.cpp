@@ -9,6 +9,7 @@
 #include "DepthTest/DepthTest.h"
 #include "StencilTest/StencilTest.h"
 #include "PostProcessTest/PostProcessTest.h"
+#include "BlinnPhongTest/BlinnPhongTest.h"
 
 using namespace GLCore;
 
@@ -28,7 +29,7 @@ public:
 		testMenu->RegisterTest<DepthTest>("Test Depth");
 		testMenu->RegisterTest<StencilTest>("Test Stencil");
 		testMenu->RegisterTest<PostProcessTest>("Test PostProcess");
-
+		testMenu->RegisterTest<BlinnPhongTest>("Test BlinnPhong");
 		PushLayer(testMenu);
 
 		testMenu->Preset("Test PostProcess");

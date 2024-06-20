@@ -1,28 +1,29 @@
-#include "ModelTest.h"
+#include "BlinnPhongTest.h"
 
 
 using namespace GLCore;
 using namespace GLCore::Utils;
 
-ModelTest::ModelTest()
-	: m_CameraController(0,0,glm::vec3(20,0,0))
+BlinnPhongTest::BlinnPhongTest()
+	: m_CameraController(0, 0, glm::vec3(20, 0, 0))
 {
 	m_DebugName = "Model Test";
 }
 
-ModelTest::~ModelTest() {
-		delete m_Model;
-		delete m_Shader;
+BlinnPhongTest::~BlinnPhongTest() {
+	delete m_Model;
+	delete m_Shader;
+	
 }
 
-void ModelTest::OnAttach()
+void BlinnPhongTest::OnAttach()
 {
 	EnableGLDebugging();
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
+
 	// configure global opengl state, depth comparisons and update the depth buffer
 	// https://docs.gl/gl4/glEnable
 	glEnable(GL_DEPTH_TEST);
@@ -53,28 +54,28 @@ void ModelTest::OnAttach()
 	//{ glTFLoader ldr = glTFLoader("assets/models/sword/scene.gltf", m_Model); }
 }
 
-void ModelTest::OnDetach()
+void BlinnPhongTest::OnDetach()
 {
 }
 
-void ModelTest::OnEvent(Event& event){
+void BlinnPhongTest::OnEvent(Event& event) {
 	m_CameraController.OnEvent(event);
 }
 
-void ModelTest::OnUpdate(Timestep ts)
+void BlinnPhongTest::OnUpdate(Timestep ts)
 {
 	m_time += ts.GetSeconds();
 	m_CameraController.OnUpdate(ts);
-	
+
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	GLCore::Utils::Renderer::Clear();
 
 	m_Shader->Bind();
-	m_Shader->SetUniformMat4f("u_ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
+	m_CameraController.GetCamera()->Draw(*m_Shader);
 	m_Model->Draw(*m_Shader);
 }
 
-void ModelTest::OnImGuiRender()
+void BlinnPhongTest::OnImGuiRender()
 {
 	ImGui::Text("Application average\n %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	m_CameraController.OnImGuiRender();

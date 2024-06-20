@@ -32,7 +32,10 @@ namespace GLCore::Utils {
 		m_Material->Draw(shader);
 
 		// draw mesh
-		Renderer::Draw(*m_VAO, *m_IBO, shader);
+		m_VAO->Bind();
+		m_IBO->Bind();
+
+		glDrawElements(GL_TRIANGLES, m_IBO->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 		m_IBO->Unbind();
 		m_VAO->Unbind();
@@ -40,14 +43,12 @@ namespace GLCore::Utils {
 
 	void Mesh::Draw(Shader& shader)
 	{
-		shader.Bind();
+		shader.SetUniformMat4f("u_Model", m_Transform->GetModelMatrix());
 		shader.SetUniformMat4f("model", m_Transform->GetModelMatrix());
-		
+
 		for (auto& subMesh : m_SubMeshes)
 		{
 			subMesh->Draw(shader);
 		}
-
-		shader.Unbind();
 	}
 }

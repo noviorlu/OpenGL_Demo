@@ -34,7 +34,7 @@ namespace GLCore::Utils {
 		}
 	}*/
 
-	PhongMaterial::PhongMaterial(
+	BlinnPhongMaterial::BlinnPhongMaterial(
 		const glm::vec3& ambient,
 		const glm::vec3& diffuse,
 		const glm::vec3& specular,
@@ -46,19 +46,39 @@ namespace GLCore::Utils {
 		m_Shininess(shininess) 
 	{ }
 
-	void PhongMaterial::Draw(Shader& shader) {
-		shader.SetUniform3fv("material.ambient", m_Ambient);
-		shader.SetUniform3fv("material.diffuse", m_Diffuse);
-		shader.SetUniform3fv("material.specular", m_Specular);
-		shader.SetUniform1f("material.shininess", m_Shininess);
+	BlinnPhongMaterial::BlinnPhongMaterial(std::shared_ptr<Material> mat)
+	{
+		auto pbrMat = std::dynamic_pointer_cast<PBRMaterial>(mat);
+		m_Ambient = glm::vec3(1.0f);
+		m_Diffuse = glm::vec3(1.0f);
+		m_Specular = glm::vec3(1.0f);
+		m_Shininess = 1.0f;
+		m_BaseColor = pbrMat->m_PBRMetallicRoughness.baseColorFactor;
+		m_BaseColorTexture = pbrMat->m_PBRMetallicRoughness.baseColorTexture;
 	}
 
-	void PhongMaterial::OnImGuiRender() {
+	void BlinnPhongMaterial::Draw(Shader& shader) {
+		shader.SetUniform3fv("u_Material.ambient", m_Ambient);
+		shader.SetUniform3fv("u_Material.diffuse", m_Diffuse);
+		shader.SetUniform3fv("u_Material.specular", m_Specular);
+		shader.SetUniform1f("u_Material.shininess", m_Shininess);
+
+		if (m_BaseColorTexture) {
+			shader.SetUniform1i("u_Material.baseColorTexture", 0);
+			m_BaseColorTexture->Bind(0);
+		}
+		else {
+			shader.SetUniform4fv("u_Material.baseColor", m_BaseColor);
+		}
+	}
+
+	void BlinnPhongMaterial::OnImGuiRender() {
 		ImGui::ColorEdit3("Ambient", glm::value_ptr(m_Ambient));
 		ImGui::ColorEdit3("Diffuse", glm::value_ptr(m_Diffuse));
 		ImGui::ColorEdit3("Specular", glm::value_ptr(m_Specular));
 		ImGui::SliderFloat("Shininess", &m_Shininess, 0.0f, 256.0f);
 	}
+
 	PBRMaterial::PBRMaterial(
 		const glm::vec3& emissiveFactor, 
 		const std::string& name, 

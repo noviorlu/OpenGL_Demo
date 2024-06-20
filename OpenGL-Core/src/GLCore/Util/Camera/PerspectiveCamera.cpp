@@ -38,6 +38,14 @@ namespace GLCore::Utils {
 		RecalculateProjectionMatrix();
 	}
 
+	void PerspectiveCamera::Draw(Shader& shader)
+	{
+		shader.SetUniformMat4f("u_ViewProjection", m_ViewProjectionMatrix);
+		shader.SetUniformMat4f("u_View", m_ViewMatrix);
+		shader.SetUniformMat4f("u_Projection", m_ProjectionMatrix);
+		shader.SetUniform3fv("u_ViewPos", m_Position);
+	}
+
 	void PerspectiveCamera::RecalculateProjectionMatrix() {
 		m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, m_Near, m_Far);
 		RecalculateVPMatrix();

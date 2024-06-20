@@ -64,9 +64,9 @@ void StencilTest::OnUpdate(Timestep ts)
 	Renderer::Clear();
 
 	m_Shader->Bind();
-	m_Shader->SetUniformMat4f("ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
+	m_Shader->SetUniformMat4f("u_ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
 	m_Outline->Bind();
-	m_Outline->SetUniformMat4f("ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
+	m_Outline->SetUniformMat4f("u_ViewProjection", m_CameraController.GetCamera()->GetViewProjectionMatrix());
 
 	// Setup Stencil Buffer Write rule
 	glStencilFunc(GL_ALWAYS, 1, 0xFF); // all fragments should pass the stencil test
