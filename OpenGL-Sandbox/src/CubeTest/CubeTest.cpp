@@ -85,7 +85,7 @@ void CubeTest::OnAttach()
 
 
 	m_Shader = Shader::FromGLSLTextFiles(
-		"assets/shaders/test_cube_vert.glsl",
+		"assets/shaders/cube_vert.glsl",
 		"assets/shaders/test_texture2D_frag.glsl"
 	);
 	m_Texture = new Texture("assets/textures/10.jpg");

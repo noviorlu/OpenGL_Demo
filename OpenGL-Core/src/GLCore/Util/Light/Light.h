@@ -18,6 +18,7 @@ namespace GLCore::Utils {
 		Light(LightType type, const glm::vec3& position) {
 			m_Type = type;
 			m_Transform.SetTranslation(position);
+			m_Transform.SetScale(glm::vec3(0.2f));
 		}
 
 		virtual void OnImGuiRender() {

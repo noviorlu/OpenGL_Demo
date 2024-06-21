@@ -18,6 +18,7 @@ public:
 	virtual void OnImGuiRender() override;
 private:
 	GLCore::Utils::Shader* m_Shader;
+	GLCore::Utils::Shader* m_IconShader;
 	GLCore::Utils::Model* m_Model;
 	GLCore::Utils::LightGroup* m_LightGroup;
 

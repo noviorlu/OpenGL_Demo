@@ -8,7 +8,9 @@
 namespace GLCore::Utils {
 	class LightGroup {
 	public:
-		LightGroup() {}
+		LightGroup() {
+			m_Icon = Cube();
+		}
 		~LightGroup() {
 			m_Lights.clear();
 		}
@@ -24,8 +26,8 @@ namespace GLCore::Utils {
 		}
 		void DrawIcon(Shader& shader) {
 			for (auto& light : m_Lights) {
-				//shader.SetUniformMat4f("u_Model", light->m_Transform.GetModelMatrix());
-				//m_Icon.Draw(shader);
+				shader.SetUniformMat4f("u_Model", light->m_Transform.GetModelMatrix());
+				m_Icon.Draw(shader);
 			}
 		}
 
@@ -47,7 +49,7 @@ namespace GLCore::Utils {
 		}
 	private:
 		std::vector<std::shared_ptr<Light>> m_Lights;
-		Quad m_Icon;
+		Cube m_Icon;
 	};
 
 	class BlinnPhongLightGroup : public LightGroup {

@@ -145,7 +145,8 @@
     <None Include="assets\shaders\test.vert.glsl" />
     <None Include="assets\shaders\test_Batch_frag.glsl" />
     <None Include="assets\shaders\test_Batch_vert.glsl" />
-    <None Include="assets\shaders\test_cube_vert.glsl" />
+    <None Include="assets\shaders\cube_frag.glsl" />
+    <None Include="assets\shaders\cube_vert.glsl" />
     <None Include="assets\shaders\test_texture2D_frag.glsl" />
     <None Include="assets\shaders\test_texture2D_vert.glsl" />
   </ItemGroup>

@@ -28,6 +28,11 @@ void BlinnPhongTest::OnAttach()
 		"assets/shaders/blinnphong_frag.glsl"
 	);
 
+	m_IconShader = Shader::FromGLSLTextFiles(
+		"assets/shaders/cube_vert.glsl",
+		"assets/shaders/cube_frag.glsl"
+	);
+
 	m_CameraController = new PerspectiveCameraController(0, 0, glm::vec3(20, 0, 0));
 
 	m_Model = new Model(
@@ -72,11 +77,14 @@ void BlinnPhongTest::OnUpdate(Timestep ts)
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-
 	m_Shader->Bind();
 	m_CameraController->GetCamera()->Draw(*m_Shader);
 	m_LightGroup->Draw(*m_Shader);
 	m_Model->Draw(*m_Shader);
+
+	m_IconShader->Bind();
+	m_CameraController->GetCamera()->Draw(*m_IconShader);
+	m_LightGroup->DrawIcon(*m_IconShader);
 }
 
 void BlinnPhongTest::OnImGuiRender()
