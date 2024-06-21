@@ -19,9 +19,9 @@ public:
 private:
 	GLCore::Utils::Shader* m_Shader;
 	GLCore::Utils::Model* m_Model;
-	//GLCore::Utils::LightGroup m_LightGroup;
+	GLCore::Utils::LightGroup* m_LightGroup;
 
-	GLCore::Utils::PerspectiveCameraController m_CameraController;
+	GLCore::Utils::PerspectiveCameraController* m_CameraController;
 	float m_time = 0.0f;
 
 };

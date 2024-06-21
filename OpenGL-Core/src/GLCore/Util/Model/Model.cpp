@@ -60,10 +60,14 @@ namespace GLCore::Utils {
 	}
     void Model::ConvertToBlinnPhongMaterial()
     {
-        for (auto& mat : m_MaterialPool) {
-            auto pbrMat = std::dynamic_pointer_cast<PBRMaterial>(mat.second);
-            if (pbrMat != nullptr) {
-				m_MaterialPool[mat.first] = std::make_shared<BlinnPhongMaterial>(pbrMat);
+        m_MaterialPool.clear();
+        for (auto mesh : m_Meshes) {
+            for (auto subMesh : mesh->m_SubMeshes) {
+                std::string matName = subMesh->m_Material->m_Name+"_BlinnPhong";
+                if (m_MaterialPool.find(matName) == m_MaterialPool.end()) {
+                    m_MaterialPool[matName] = std::make_shared<BlinnPhongMaterial>(subMesh->m_Material);;
+                }
+                subMesh->m_Material = m_MaterialPool[matName];
 			}
         }
     }

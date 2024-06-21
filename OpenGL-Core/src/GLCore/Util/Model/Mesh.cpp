@@ -44,7 +44,6 @@ namespace GLCore::Utils {
 	void Mesh::Draw(Shader& shader)
 	{
 		shader.SetUniformMat4f("u_Model", m_Transform->GetModelMatrix());
-		shader.SetUniformMat4f("model", m_Transform->GetModelMatrix());
 
 		for (auto& subMesh : m_SubMeshes)
 		{

@@ -11,7 +11,6 @@ namespace GLCore::Utils {
 	class Material { 
 	public:
 		std::string m_Name;
-
 	public:
 		virtual void OnImGuiRender() = 0;
 		virtual void Draw(Shader& shader) = 0;
@@ -49,7 +48,6 @@ namespace GLCore::Utils {
 	class PBRMaterial : public Material {
 	public:
 		glm::vec3 m_EmissiveFactor;
-		std::string m_Name;
 		bool m_DoubleSided;
 
 		struct PBRMetallicRoughness {

@@ -116,7 +116,7 @@ namespace GLCore::Utils {
 	void Shader::Unbind() const
 	{
 		glUseProgram(0);
-	}
+	}	
 
 	void Shader::SetUniform1i(const std::string& name, int value)
 	{

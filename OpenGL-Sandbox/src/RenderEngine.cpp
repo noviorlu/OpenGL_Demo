@@ -32,7 +32,7 @@ public:
 		testMenu->RegisterTest<BlinnPhongTest>("Test BlinnPhong");
 		PushLayer(testMenu);
 
-		testMenu->Preset("Test PostProcess");
+		testMenu->Preset("Test BlinnPhong");
 	}
 };
 

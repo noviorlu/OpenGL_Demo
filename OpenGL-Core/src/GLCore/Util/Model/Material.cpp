@@ -2,38 +2,6 @@
 #include "Material.h"
 
 namespace GLCore::Utils {
-	/*void Material::Draw(Shader& shader) {
-		unsigned int diffuseNr = 1;
-		unsigned int specularNr = 1;
-		unsigned int normalNr = 1;
-		unsigned int heightNr = 1;
-
-		// bind appropriate textures
-		for (unsigned int i = 0; i < m_Textures.size(); i++)
-		{
-			m_Textures[i]->Bind(i);
-
-			std::string name;
-			// name here should be match what defined in shader
-			switch (m_Textures[i]->m_Type) {
-			case Texture::TextureType::DIFFUSE:
-				name = "texture_diffuse" + std::to_string(diffuseNr++);
-				break;
-			case Texture::TextureType::SPECULAR:
-				name = "texture_specular" + std::to_string(specularNr++);
-				break;
-			case Texture::TextureType::NORMAL:
-				name = "texture_normal" + std::to_string(normalNr++);
-				break;
-			case Texture::TextureType::HEIGHT:
-				name = "texture_height" + std::to_string(heightNr++);
-				break;
-			}
-
-			shader.SetUniform1i(name.c_str(), i);
-		}
-	}*/
-
 	BlinnPhongMaterial::BlinnPhongMaterial(
 		const glm::vec3& ambient,
 		const glm::vec3& diffuse,
@@ -49,6 +17,7 @@ namespace GLCore::Utils {
 	BlinnPhongMaterial::BlinnPhongMaterial(std::shared_ptr<Material> mat)
 	{
 		auto pbrMat = std::dynamic_pointer_cast<PBRMaterial>(mat);
+		m_Name = pbrMat->m_Name;
 		m_Ambient = glm::vec3(1.0f);
 		m_Diffuse = glm::vec3(1.0f);
 		m_Specular = glm::vec3(1.0f);
@@ -65,10 +34,12 @@ namespace GLCore::Utils {
 
 		if (m_BaseColorTexture) {
 			shader.SetUniform1i("u_Material.baseColorTexture", 0);
+			shader.SetUniform1i("u_Material.useBaseColorTexture", 1);
 			m_BaseColorTexture->Bind(0);
 		}
 		else {
 			shader.SetUniform4fv("u_Material.baseColor", m_BaseColor);
+			shader.SetUniform1i("u_Material.useBaseColorTexture", 0);
 		}
 	}
 
@@ -89,9 +60,9 @@ namespace GLCore::Utils {
 		float roughnessFactor
 	)
 		: m_EmissiveFactor(emissiveFactor),
-		m_Name(name),
 		m_DoubleSided(doubleSided) 
 	{
+		m_Name = name;
 		m_PBRMetallicRoughness.baseColorFactor = baseColorFactor;
 		if (baseColorTexture) {
 			m_PBRMetallicRoughness.baseColorTexture = baseColorTexture;
