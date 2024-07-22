@@ -108,6 +108,7 @@
     <ClInclude Include="src\MatTest\MatTest.h" />
     <ClInclude Include="src\ModelTest\ModelTest.h" />
     <ClInclude Include="src\PostProcessTest\PostProcessTest.h" />
+    <ClInclude Include="src\PPMTest\PPMTest.h" />
     <ClInclude Include="src\StencilTest\StencilTest.h" />
     <ClInclude Include="src\TestMenu\TestMenu.h" />
     <ClInclude Include="src\TextureTest\Texture2DTest.h" />
@@ -121,6 +122,7 @@
     <ClCompile Include="src\MatTest\MatTest.cpp" />
     <ClCompile Include="src\ModelTest\ModelTest.cpp" />
     <ClCompile Include="src\PostProcessTest\PostProcessTest.cpp" />
+    <ClCompile Include="src\PPMTest\PPMTest.cpp" />
     <ClCompile Include="src\RenderEngine.cpp" />
     <ClCompile Include="src\StencilTest\StencilTest.cpp" />
     <ClCompile Include="src\TestMenu\TestMenu.cpp" />
@@ -141,6 +143,10 @@
     <None Include="assets\shaders\pbr_frag.glsl" />
     <None Include="assets\shaders\postproc_frag.glsl" />
     <None Include="assets\shaders\postproc_vert.glsl" />
+    <None Include="assets\shaders\RTX\RTXCommon.glsl" />
+    <None Include="assets\shaders\RTX\RayTracePPM.glsl" />
+    <None Include="assets\shaders\RTX\RTX_frag.glsl" />
+    <None Include="assets\shaders\RTX\RTX_vert.glsl" />
     <None Include="assets\shaders\test.frag.glsl" />
     <None Include="assets\shaders\test.vert.glsl" />
     <None Include="assets\shaders\test_Batch_frag.glsl" />

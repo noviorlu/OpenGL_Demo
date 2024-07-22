@@ -50,6 +50,39 @@ namespace GLCore::Utils {
 		ImGui::SliderFloat("Shininess", &m_Shininess, 0.0f, 256.0f);
 	}
 
+	int BlinnPhongMaterial::Seralize(std::vector<float>& Matdata)
+	{
+		int pos = Matdata.size();
+
+		Matdata.push_back(BLINNPHONG);
+		Matdata.push_back(5); // header occupy 5 pixel
+		int texId = m_BaseColorTexture? m_BaseColorTexture->m_SeralizeID : -1;
+		Matdata.push_back(texId);
+		Matdata.push_back(0);
+
+		Matdata.push_back(m_Ambient.r);
+		Matdata.push_back(m_Ambient.g);
+		Matdata.push_back(m_Ambient.b);
+		Matdata.push_back(0);
+
+		Matdata.push_back(m_Diffuse.r);
+		Matdata.push_back(m_Diffuse.g);
+		Matdata.push_back(m_Diffuse.b);
+		Matdata.push_back(0);
+
+		Matdata.push_back(m_Specular.r);
+		Matdata.push_back(m_Specular.g);
+		Matdata.push_back(m_Specular.b);
+		Matdata.push_back(m_Shininess);
+
+		Matdata.push_back(m_BaseColor.r);
+		Matdata.push_back(m_BaseColor.g);
+		Matdata.push_back(m_BaseColor.b);
+		Matdata.push_back(m_BaseColor.a);
+
+		return pos;
+	}
+
 	PBRMaterial::PBRMaterial(
 		const glm::vec3& emissiveFactor, 
 		const std::string& name, 
@@ -95,5 +128,14 @@ namespace GLCore::Utils {
 		ImGui::ColorEdit4("Base Color Factor", glm::value_ptr(m_PBRMetallicRoughness.baseColorFactor));
 		ImGui::SliderFloat("Metallic Factor", &m_PBRMetallicRoughness.metallicFactor, 0.0f, 1.0f);
 		ImGui::SliderFloat("Roughness Factor", &m_PBRMetallicRoughness.roughnessFactor, 0.0f, 1.0f);
+	}
+	int PBRMaterial::Seralize(std::vector<float>& Matdata)
+	{
+		int pos = Matdata.size();
+		Matdata.push_back(PBR);
+		Matdata.push_back(1);
+		Matdata.push_back(0);
+		Matdata.push_back(0);
+		return pos;
 	}
 }

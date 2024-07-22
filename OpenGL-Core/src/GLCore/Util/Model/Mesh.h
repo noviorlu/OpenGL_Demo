@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <memory>
 
 #include <glm/glm.hpp>
@@ -34,9 +34,43 @@ namespace GLCore::Utils {
 			layout.Push<float>(2); // texcoords
 			return layout;
 		}
+
+		void Seralize(std::vector<float>& SceneData) {
+			SceneData.push_back(Position.x);
+			SceneData.push_back(Position.y);
+			SceneData.push_back(Position.z);
+			SceneData.push_back(TexCoords.x);
+
+			SceneData.push_back(Normal.x);
+			SceneData.push_back(Normal.y);
+			SceneData.push_back(Normal.z);
+			SceneData.push_back(TexCoords.y);
+		}
 	};
 
-	class SubMesh {
+	class Triangle : IIterator {
+	public:
+		static int SeralizeTriangle(
+			std::vector<float>& SceneData,
+			Vertex& A, Vertex& B, Vertex& C,
+			int retptr) 
+		{
+			int pos = SceneData.size();
+
+			SceneData.push_back(TRIANGLE);
+			SceneData.push_back(7); // header occupy 7 pixel
+			SceneData.push_back(-retptr);
+			SceneData.push_back(-retptr);
+
+			A.Seralize(SceneData); // 2 pixel
+			B.Seralize(SceneData); // 2 pixel
+			C.Seralize(SceneData); // 2 pixel
+
+			return pos;
+		}
+	};
+
+	class SubMesh : IIterator{
 	public:
 		std::vector<Vertex>       m_Vertices;
 		std::vector<unsigned int> m_Indices;
@@ -58,12 +92,13 @@ namespace GLCore::Utils {
 			m_IBO->Unbind();
 		}
 		void Draw(Shader& shader);
+		int Seralize(std::vector<float>& SceneData, int retptr);
 
 	private:
 		void SetupSubMesh();
 	};
 
-	class Mesh {
+	class Mesh : IIterator{
 	public:
 		std::string m_Name;
 		Transform* m_Transform;
@@ -78,6 +113,7 @@ namespace GLCore::Utils {
 			m_SubMeshes.clear();
 		}
 		void Draw(Shader& shader);
+		int Seralize(std::vector<float>& SceneData, int retptr);
 	};
 
 	class Cube {
@@ -127,23 +163,36 @@ namespace GLCore::Utils {
 			-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 		};
 
-		Cube() {
-			m_VertexArray = new VertexArray();
-			m_VertexBuffer = new VertexBuffer(rectangleVertices, sizeof(rectangleVertices));
-
-			VertexBufferLayout layout;
-			layout.Push<float>(3);
-			layout.Push<float>(2);
-
-			m_VertexArray->AddBuffer(*m_VertexBuffer, layout);
+		Cube();
+		~Cube() {
+			delete m_VertexArray;
+			delete m_VertexBuffer;
 		}
+		void Draw(Shader& shader);
+	private:
+		VertexArray* m_VertexArray;
+		VertexBuffer* m_VertexBuffer;
+	};
 
-		void Draw(Shader& shader) {
-			m_VertexArray->Bind();
-			m_VertexBuffer->Bind();
+	class Quad {
+	public:
+		float quadVertices[24] = {
+			// pos         // texUV
+			-1.0f,  1.0f,    0.0f, 1.0f, 
+			-1.0f, -1.0f,    0.0f, 0.0f,
+			 1.0f, -1.0f,    1.0f, 0.0f,
 
-			glDrawArrays(GL_TRIANGLES, 0, m_VertexBuffer->GetCount() / m_VertexArray->GetVertexSize());
+			-1.0f,  1.0f,    0.0f, 1.0f,
+			 1.0f, -1.0f,    1.0f, 0.0f,
+			 1.0f,  1.0f,    1.0f, 1.0f 
+		};
+
+		Quad();
+		~Quad() {
+			delete m_VertexArray;
+			delete m_VertexBuffer;
 		}
+		void Draw(Shader& shader);
 	private:
 		VertexArray* m_VertexArray;
 		VertexBuffer* m_VertexBuffer;

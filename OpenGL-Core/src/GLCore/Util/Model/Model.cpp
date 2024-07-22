@@ -52,7 +52,6 @@ namespace GLCore::Utils {
 
         ImGui::End();
     }
-
     void Model::Draw(Shader& shader)
 	{
         for (unsigned int i = 0; i < m_Meshes.size(); i++)
@@ -70,5 +69,55 @@ namespace GLCore::Utils {
                 subMesh->m_Material = m_MaterialPool[matName];
 			}
         }
+    }
+
+    int Model::SeralizeMaterial(std::vector<float>& MatData, int initialPos) {
+        SetupMatTexID();
+        
+        int frac = m_MaterialPool.size() / 4 + 1;
+        for (int i = 0; i < frac * 4; i++) MatData.push_back(0);
+        initialPos = 0;
+
+        int pos = MatData.size();
+        for (auto mat : m_MaterialPool)
+        {
+            MatData[initialPos] = mat.second->Seralize(MatData);
+            initialPos++;
+		}
+		return pos;
+    }
+
+    int Model::Seralize(std::vector<float>& SceneData, int retptr) {
+        // LAYOUT:  Type    | OccupySize    | InvTFPtr  | GroupPtr
+        //          TFPtr   | 0x80          | 0x80      | 0x80
+        // 0. check is type MODEL, no extra proc, push loc + 2 into stack
+        // 1. check is type TRANSFORM, do transform, push loc + 2 into stack
+        // (DISCOVER NEGATIVE, know return to upper Level)
+        // 2. check is type GROUP, iterate through group's childs
+        // 3. pop if Trf do Trf to Ray then return to upper level
+        int pos = SceneData.size();
+        
+        SceneData.push_back(MODEL); // pos
+        SceneData.push_back(2); // pos + 1, header occupy 2 pixel
+        SceneData.push_back(0); // pos + 2
+        SceneData.push_back(0); // pos + 3
+
+        SceneData.push_back(0); // pos + 4
+        SceneData.push_back(-retptr); // pos + 5
+        SceneData.push_back(-retptr); // pos + 6
+        SceneData.push_back(-retptr); // pos + 7
+
+        SceneData[pos + 2] = this->m_Transform.Seralize(SceneData, true, pos + 3);
+        SceneData[pos + 3] = SeralizeGroup(SceneData, m_Meshes.size(), pos + 4);
+        SceneData[pos + 4] = this->m_Transform.Seralize(SceneData, false, pos + 5);
+
+        int GroupPtr = SceneData[pos + 3] + 4;
+        for (auto mesh : m_Meshes)
+        {
+			SceneData[GroupPtr] = mesh->Seralize(SceneData, GroupPtr+1);
+            GroupPtr++;
+		}
+
+        return pos;
     }
 }

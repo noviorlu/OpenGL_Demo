@@ -35,7 +35,6 @@ namespace GLCore::Utils {
 		{
 			traverseNode(i, &(m_Model->m_Transform));
 		}
-	
 	}
 
 	std::vector<unsigned char> glTFLoader::getData()
@@ -169,7 +168,12 @@ namespace GLCore::Utils {
 		{
 			unsigned int posAccInd = primitive["attributes"]["POSITION"];
 			unsigned int normalAccInd = primitive["attributes"]["NORMAL"];
-			unsigned int texAccInd = primitive["attributes"]["TEXCOORD_0"];
+			unsigned int texAccInd = -1; // Default value if TEXCOORD_0 doesn't exist
+			if (primitive["attributes"].contains("TEXCOORD_0"))
+			{
+				texAccInd = primitive["attributes"]["TEXCOORD_0"];
+			}
+
 			unsigned int indAccInd = primitive["indices"];
 			unsigned int matInd = primitive["material"];
 
@@ -178,8 +182,16 @@ namespace GLCore::Utils {
 			std::vector<glm::vec3> positions = groupFloatsVec3(posVec);
 			std::vector<float> normalVec = getFloats(JSON["accessors"][normalAccInd]);
 			std::vector<glm::vec3> normals = groupFloatsVec3(normalVec);
-			std::vector<float> texVec = getFloats(JSON["accessors"][texAccInd]);
-			std::vector<glm::vec2> texUVs = groupFloatsVec2(texVec);
+			
+			std::vector<glm::vec2> texUVs;
+			if (texAccInd == -1) {
+				texUVs = std::vector<glm::vec2>(positions.size(), glm::vec2(0.0f, 0.0f));
+			}
+			else {
+				std::vector<float> texVec = getFloats(JSON["accessors"][texAccInd]);
+				texUVs = groupFloatsVec2(texVec);
+			}
+			
 
 			// Combine all the vertex components and also get the indices and textures
 			std::vector<Vertex> vertices = assembleVertices(positions, normals, texUVs);

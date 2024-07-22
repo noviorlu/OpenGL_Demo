@@ -31,7 +31,7 @@ namespace GLCore::Utils {
 	private:
 		Shader() = default;
 
-		void LoadFromGLSLTextFiles(const std::string& vertexShaderPath, const std::string& fragmentShaderPath);
+		void LoadFragVertShaderProgram(const std::string& vertexShaderPath, const std::string& fragmentShaderPath);
 		GLuint CompileShader(GLenum type, const std::string& source);
 		int GetUniformLocation(const std::string& name);
 	private:

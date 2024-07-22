@@ -17,9 +17,11 @@ namespace GLCore::Utils {
 		TextureType m_Type;
 		std::string m_FilePath;
 		unsigned int m_RendererID;
+		int m_SeralizeID = -1;
 	public:
 		Texture();
 		Texture(float width, float height);
+		Texture(float width, float height, size_t format, size_t dataType, const void* buffer);
 		Texture(const std::string& path);
 		Texture(const std::string& path, TextureType type);
 		~Texture();

@@ -8,7 +8,9 @@
 #include "../Transform.hpp"
 
 namespace GLCore::Utils {
-	class Model {
+	
+
+	class Model : IIterator {
 	public:
 		std::string m_Name;
 
@@ -24,7 +26,6 @@ namespace GLCore::Utils {
 		std::unordered_map<std::string, std::shared_ptr<Mesh>> m_MeshPool;
 		std::unordered_map<std::string, std::shared_ptr<Material>> m_MaterialPool;
 		std::unordered_map<std::string, std::shared_ptr<Texture>> m_TexturePool;
-		//std::unordered_map<std::string, std::shared_ptr<Shader>> m_ShaderPool;
 
 		bool m_AutoRotate = false;
 		float m_RotationSpeed = 1.0f;
@@ -42,5 +43,22 @@ namespace GLCore::Utils {
 		void Draw(Shader& shader);
 
 		void ConvertToBlinnPhongMaterial();
+
+		void SetupMatTexID() {
+			int i = 0;
+			for (auto& mat : m_MaterialPool) {
+				mat.second->m_SeralizeID = i;
+				i++;
+			}
+			
+			i = 0;
+			for (auto& tex : m_TexturePool) {
+				tex.second->m_SeralizeID = i;
+				i++;
+			}
+		}
+
+		int Seralize(std::vector<float>& SceneData, int retptr);
+		int SeralizeMaterial(std::vector<float>& MatData, int initPos);
 	};
 }

@@ -1,30 +1,9 @@
 #include "glpch.h"
 #include "Shader.h"
-
+#include "../Common/File.hpp"
 #include <fstream>
 
 namespace GLCore::Utils {
-
-	static std::string ReadFileAsString_deprec(const std::string& filepath)
-	{
-		std::string result;
-		std::ifstream in(filepath, std::ios::in | std::ios::binary);
-		if (in)
-		{
-			in.seekg(0, std::ios::end);
-			result.resize((size_t)in.tellg());
-			in.seekg(0, std::ios::beg);
-			in.read(&result[0], result.size());
-			in.close();
-		}
-		else
-		{
-			LOG_ERROR("Could not open file '{0}'", filepath);
-		}
-
-		return result;
-	}
-
 	Shader::~Shader()
 	{
 		Unbind();
@@ -62,14 +41,14 @@ namespace GLCore::Utils {
 	Shader* Shader::FromGLSLTextFiles(const std::string& vertexShaderPath, const std::string& fragmentShaderPath)
 	{
 		Shader* shader = new Shader();
-		shader->LoadFromGLSLTextFiles(vertexShaderPath, fragmentShaderPath);
+		shader->LoadFragVertShaderProgram(vertexShaderPath, fragmentShaderPath);
 		return shader;
 	}
 	
-	void Shader::LoadFromGLSLTextFiles(const std::string& vertexShaderPath, const std::string& fragmentShaderPath)
+	void Shader::LoadFragVertShaderProgram(const std::string& vertexShaderPath, const std::string& fragmentShaderPath)
 	{
-		std::string vertexSource = ReadFileAsString_deprec(vertexShaderPath);
-		std::string fragmentSource = ReadFileAsString_deprec(fragmentShaderPath);
+		std::string vertexSource = File::ReadFileAsString(vertexShaderPath);
+		std::string fragmentSource = File::ReadFileAsString(fragmentShaderPath);
 
 		GLuint program = glCreateProgram();
 		int glShaderIDIndex = 0;
@@ -97,7 +76,6 @@ namespace GLCore::Utils {
 			glDeleteShader(fragmentShader);
 
 			LOG_ERROR("{0}", infoLog.data());
-			// HZ_CORE_ASSERT(false, "Shader link failure!");
 		}
 		
 		glDetachShader(program, vertexShader);

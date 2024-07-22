@@ -10,10 +10,17 @@
 namespace GLCore::Utils {
 	class Material { 
 	public:
+		enum MatDataType {
+			BLINNPHONG = 0,
+			PBR
+		};
+
 		std::string m_Name;
+		int m_SeralizeID;
 	public:
 		virtual void OnImGuiRender() = 0;
 		virtual void Draw(Shader& shader) = 0;
+		virtual int Seralize(std::vector<float>& Matdata) = 0;
 	};
 
 	class BlinnPhongMaterial : public Material {
@@ -41,8 +48,7 @@ namespace GLCore::Utils {
 		BlinnPhongMaterial(std::shared_ptr<Material> mat);
 		void Draw(Shader& shader) override;
 		void OnImGuiRender() override;
-
-
+		int Seralize(std::vector<float>& Matdata) override;
 	};
 
 	class PBRMaterial : public Material {
@@ -70,5 +76,6 @@ namespace GLCore::Utils {
 
 		void Draw(Shader& shader) override;
 		void OnImGuiRender() override;
+		int Seralize(std::vector<float>& Matdata) override;
 	};
 }

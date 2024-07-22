@@ -5,10 +5,12 @@
 #include <glm/gtc/quaternion.hpp>
 #include <imgui.h>
 
+#include "RTX/RTXCommon.hpp"
+
 #include <vector>
 
 namespace GLCore::Utils {
-	class Transform
+	class Transform : IIterator
 	{
 	public:
 		Transform() {}
@@ -102,6 +104,10 @@ namespace GLCore::Utils {
 			return m_Matrix;
 		}
 
+		const glm::mat4& GetInverseModelMatrix() {
+			return glm::inverse(GetModelMatrix());
+		}
+
 		void OnImGuiRender() {
 			ImGui::Text("Transform");
 			if(ImGui::DragFloat3("Translation", &m_Translation.x, 0.1f))
@@ -128,6 +134,33 @@ namespace GLCore::Utils {
 				
 			if(ImGui::DragFloat3("Scale", &m_Scale.x, 0.1f))
 				setDirty();
+		}
+
+		int Seralize(std::vector<float>& SceneData, bool isInverse, int retptr)
+		{
+			int childPos = SceneData.size();
+			SceneData.push_back(TRANSFORM);
+
+			SceneData.push_back(5); // occupy 5 pixels
+			SceneData.push_back(-retptr);
+			SceneData.push_back(-retptr);
+
+			// push back the Transform Matrix
+			glm::mat4 model;
+			if (isInverse)
+				model = GetInverseModelMatrix();
+			else
+				model = GetModelMatrix();
+
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					SceneData.push_back(model[j][i]);
+				}
+			}
+
+			return childPos;
 		}
 	private:
 		Transform* m_Parent = nullptr;
