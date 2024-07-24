@@ -50,6 +50,20 @@ vec3 RandInSphere();
 
 void Camera_GenRay(out struct Ray ray);
 
+vec4 GetPack(sampler2D data, int idx);
+int At(sampler2D data, int idx);
+
+void Ray_Transform(inout struct Ray ray, mat4 transform);
+
+void Vertex_Load(int idx, out struct Vertex vert);
+void Vertex_Interpolate(vec3 abg, struct Vertex A, struct Vertex B, struct Vertex C, out struct Vertex vert);
+void Vertex_Transform(inout struct Vertex vert, mat4 transform);
+
+vec4 Intersect_RayTri(vec3 e, vec3 d, vec3 a, vec3 b, vec3 c);
+void RayHit_Triangle(int idx, inout struct Ray ray, inout struct Hit hit);
+
+void RayHit(in struct Ray ray, out struct Hit hit);
+
 // GLSL IN OUT
 out vec4 FragColor;
 in vec2 TexCoords;
@@ -62,7 +76,21 @@ uniform sampler2D u_matData;
 
 void main()
 {
-    FragColor = vec4(TexCoords, 0.0, 1.0);
+    struct Ray ray;
+    //Camera_GenRay(ray);
+    ray.origin = vec3(0.0, 0.0, 5.0);;
+    ray.dir = normalize(vec3(0.0, 0.0, -1.0));
+    ray.tMax = FLT_MAX;
+
+    struct Hit hit;
+    hit.isHit = false;
+    
+    RayHit_Triangle(0, ray, hit);
+
+    if(hit.isHit)
+		FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+	else
+        FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 }
 
 float RandXY(float x, float y) {
@@ -178,29 +206,45 @@ void Vertex_Transform(inout struct Vertex vert, mat4 transform) {
 }
 
 vec4 Intersect_RayTri(vec3 e, vec3 d, vec3 a, vec3 b, vec3 c) {
-    mat3 equation_A = mat3(vec3(a - b), vec3(a - c), d);
+    vec3 ab = b - a;
+    vec3 ac = c - a;
+    vec3 pvec = cross(d, ac);
+    float det = dot(ab, pvec);
 
-    if (abs(determinant(equation_A)) < 0.00001)
-        return vec4(0);
+    if (abs(det) < 1e-8)
+        return vec4(0.0);
 
-    vec3 equation_b = a - e;
-    vec3 equation_X = inverse(equation_A) * equation_b;
-    float alpha = 1 - equation_X[0] - equation_X[1];
-    return vec4(alpha, equation_X);
+    float invDet = 1.0 / det;
+    vec3 tvec = e - a;
+    float u = dot(tvec, pvec) * invDet;
+
+    if (u < 0.0 || u > 1.0)
+        return vec4(0.0);
+
+    vec3 qvec = cross(tvec, ab);
+    float v = dot(d, qvec) * invDet;
+
+    if (v < 0.0 || u + v > 1.0)
+        return vec4(0.0);
+
+    float t = dot(ac, qvec) * invDet;
+    return vec4(u, v, 1.0 - u - v, t);
 }
 
 void RayHit_Triangle(int idx, inout struct Ray ray, inout struct Hit hit) {
-    struct Vertex A, B, C;
-    Vertex_Load(idx, A);
-    Vertex_Load(idx + 8, B);
-    Vertex_Load(idx + 16, C);
+    struct Vertex A = Vertex(vec3(-1.0, -1.0, 0.0), vec3(0.0, 0.0, 1.0), vec2(0.0, 0.0));
+    struct Vertex B = Vertex(vec3(1.0, -1.0, 0.0), vec3(0.0, 0.0, 1.0), vec2(1.0, 0.0));
+    struct Vertex C = Vertex(vec3(0.0, 1.0, 0.0), vec3(0.0, 0.0, 1.0), vec2(0.5, 1.0));
+    //struct Vertex A, B, C;
+    //Vertex_Load(idx, A);
+    //Vertex_Load(idx + 8, B);
+    //Vertex_Load(idx + 16, C);
 
     vec4 abgt = Intersect_RayTri(ray.origin, ray.dir, A.pos, B.pos, C.pos);
     if (abgt == vec4(0) ||
         any(lessThan(abgt, vec4(0, 0, 0, tMin))) ||
         any(greaterThan(abgt, vec4(1, 1, 1, ray.tMax)))
-        )
-        return;
+    ) return;
 
     hit.isHit = true;
     Vertex_Interpolate(abgt.xyz, A, B, C, hit.vertex);

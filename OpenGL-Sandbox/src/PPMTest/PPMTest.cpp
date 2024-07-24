@@ -28,10 +28,10 @@ void PPMTest::OnAttach()
 		"assets/shaders/RTX/RTX_frag.glsl"
 	);
 
-	m_CameraController = new PerspectiveCameraController(0, 0, glm::vec3(20, 0, 0));
+	m_CameraController = new PerspectiveCameraController(0, 0, glm::vec3(0, 0, 0));
 
 	m_Model = new Model(
-		glm::vec3(0.0, -2.0, 0.0),
+		glm::vec3(-20.0, -2.0, 0.0),
 		glm::vec3(180.0, 0.0, 0.0),
 		glm::vec3(2, 2, -2)
 	);
@@ -46,6 +46,13 @@ void PPMTest::OnAttach()
 
 	int SceneTexSize = ceil(sqrt(SceneData.size()));
 	int MatTexSize = ceil(sqrt(MatData.size()));
+
+	int SceneTexSize2 = SceneTexSize * SceneTexSize;
+	int MatTexSize2 = MatTexSize * MatTexSize;
+
+	// enlarge SceneData and MatData to square
+	while(SceneData.size() < SceneTexSize2) SceneData.push_back(0.0f);
+	while(MatData.size() < MatTexSize2) MatData.push_back(0.0f);
 
 	m_SceneTexture = new Texture(SceneTexSize, SceneTexSize, GL_RGBA, GL_FLOAT, SceneData.data());
 	m_MaterialTexture = new Texture(MatTexSize, MatTexSize, GL_RGBA, GL_FLOAT, MatData.data());
@@ -70,13 +77,20 @@ void PPMTest::OnUpdate(Timestep ts)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	m_Shader->Bind();
+	m_CameraController->GetCamera()->Draw(*m_Shader);
+	m_SceneTexture->Bind(0);
+	m_MaterialTexture->Bind(1);
+	m_Shader->SetUniform1i("u_sceneData", 0);
+	m_Shader->SetUniform1i("u_matData", 1);
+	
 	m_Quad->Draw(*m_Shader);
+
 
 }
 
 void PPMTest::OnImGuiRender()
 {
 	ImGui::Text("Application average\n %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	//m_CameraController->OnImGuiRender();
+	m_CameraController->OnImGuiRender();
 	//m_Model->OnImGuiRender();
 }

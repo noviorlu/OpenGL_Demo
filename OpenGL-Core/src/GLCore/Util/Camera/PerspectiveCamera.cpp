@@ -44,6 +44,11 @@ namespace GLCore::Utils {
 		shader.SetUniformMat4f("u_View", m_ViewMatrix);
 		shader.SetUniformMat4f("u_Projection", m_ProjectionMatrix);
 		shader.SetUniform3fv("u_ViewPos", m_Position);
+
+		shader.SetUniform3fv("u_camera.pos", m_Position);
+		shader.SetUniformMat4f("u_camera.viewProj", m_ViewProjectionMatrix);
+		shader.SetUniform1f("u_camera.srcW", m_fullScreenWidth);
+		shader.SetUniform1f("u_camera.srcH", m_fullScreenHeight);
 	}
 
 	void PerspectiveCamera::RecalculateProjectionMatrix() {
